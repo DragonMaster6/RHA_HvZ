@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2015 at 11:46 PM
+-- Generation Time: Nov 12, 2015 at 12:03 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -56,8 +56,10 @@ CREATE TABLE IF NOT EXISTS `gamesession` (
 CREATE TABLE IF NOT EXISTS `gamestats` (
   `sID` int(11) NOT NULL,
   `pID` int(11) NOT NULL,
+  `badge` int(6) NOT NULL,
   `hScore` datetime DEFAULT NULL,
   `zScore` int(10) unsigned NOT NULL,
+  `lastKill` datetime DEFAULT NULL,
   `originalZ` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
