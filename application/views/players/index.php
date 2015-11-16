@@ -8,13 +8,11 @@
 ?>
 
 <div id="stats_container">
-Hello there good developers. Am i working?
 
-I am adding something
 </div>
 
 <div id="calendar_container">
-This is where the calendar should be
+
 </div>
 
 <div id="zombie_tool_container">
