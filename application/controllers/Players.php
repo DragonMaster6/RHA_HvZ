@@ -15,6 +15,7 @@ class Players extends CI_Controller{
 		$this->load->helper("url_helper");
 
 		// Load any library classes
+		$this->load->library("session");
 	}
 
 // CREATE methods go here
@@ -24,14 +25,16 @@ class Players extends CI_Controller{
 	// Main screen for the user - displays current game play
 	public function index(){
 
+
 		// Render appropriate view
+		// to a logic switch. If the user is not signed in, automatically display the login page
 	}
 
 	// Main login screen for users not currently authenticated
 	public function start(){
 
 		// Render views here
-		$this->load->view("players/header");
+		$this->load->view("players/login_header");
 		$this->load->view("players/login");
 		$this->load->view("players/footer");
 	}

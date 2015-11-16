@@ -50,6 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
+// Player stat specific 
+
+$route['players/profile/(:any)'] = 'players/show/$1';
+$route['players/main'] = 'players/index';
 $route['default_controller'] = 'players/start';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

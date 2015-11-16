@@ -1,3 +1,11 @@
+<?php
+/*
+ * Programmers: Ben Matson and Ben Lexa
+ * Date Created: November 12, 2015
+ * Purpose: This is where players and GMs will go to login to their profile
+*/
+?>
+
 <table>
 	<tr>
 		<th> Login </th>

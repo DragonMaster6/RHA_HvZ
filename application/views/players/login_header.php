@@ -1,8 +1,8 @@
 <?php
 /*
  * Programmers: Ben Matson and Ben Lexa
- * Date Created: November 16, 2015
- * Purpose: This template displays the header for the entire site including the banner, css, and scripts
+ * Date Created: November 12, 2015
+ * Purpose: This template displays the header for the login page including the banner, css, and scripts
 */
 ?>
 <html>
@@ -19,6 +19,3 @@
 <body>
 
 	<center> <img src="<?php echo base_url('assets/pics/hvz-logo.jpg'); ?>"> </center>
-	<div id="menu_container">
-	</div>
-	
