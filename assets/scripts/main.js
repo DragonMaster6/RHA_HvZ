@@ -5,5 +5,10 @@
 */
 
 $(document).ready(function(){
-	
+	$("#stats_btn").on("click", function(){
+		$("#data_container").html("<h3> This is a test of the Data Display </h3>");
+	});
+	$("#sList_btn").on("click", function(){
+		$("#data_container").html("<h3> This is a test of the Survivor List </h3>");
+	});
 });
