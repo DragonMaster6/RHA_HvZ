@@ -10,6 +10,9 @@ class Players extends CI_Controller{
 		parent::__construct();
 		// Load any models that this controller may need to use
 		$this->load->model("player_model");
+		$this->load->model("game_model");
+		$this->load->model("gamesession_model");
+		$this->load->model("gamestats_model");
 
 		// Load any helper classes
 		$this->load->helper("url_helper");
