@@ -15,7 +15,19 @@ class player_model extends CI_Model{
 
 
 	//READ methods
-
+	public function usrAuth ($user, $pass)
+	{
+		$result = -1;
+		$user = $this->db->escape($user);
+		$pass = $this->db->escape($pass);
+		$query = $this->db->query("select pID from players where dname =".$user. "and pass =".$pass);
+		$auth_result = $query->result_array();
+		if (!empty($auth_result))
+		{
+			$result = $auth_result[0];
+		}
+		return $result;
+	}
 
 	// UPATE methods
 

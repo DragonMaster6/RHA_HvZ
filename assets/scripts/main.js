@@ -5,7 +5,5 @@
 */
 
 $(document).ready(function(){
-	$("#login_btn").on("click", function(){
-		alert("Time to login");
-	});
+	
 });

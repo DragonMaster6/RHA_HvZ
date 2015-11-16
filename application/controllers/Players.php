@@ -32,10 +32,10 @@ class Players extends CI_Controller{
 
 	// Main login screen for users not currently authenticated
 	public function start(){
-
+		$data["error"] = "";
 		// Render views here
 		$this->load->view("players/login_header");
-		$this->load->view("players/login");
+		$this->load->view("players/login", $data);
 		$this->load->view("players/footer");
 	}
 
@@ -43,6 +43,26 @@ class Players extends CI_Controller{
 
 	// this will handle the login transaction
 	public function login(){
+		$username = $this->input->post("username");
+		$password = $this->input->post("password"); 
+		$isAuth = $this->player_model->usrAuth($username, $password);
+
+		//render appropriate views based on user authentication
+		if($isAuth != -1)
+		{
+			$_SESSION["pID"] = $isAuth;
+			$this->load->view("players/header");
+			$this->load->view("players/index");
+			$this->load->view("players/footer");
+		}
+		else
+		{
+			$data["error"] = "Invalid Username or Password";
+			$this->load->view("players/login_header");
+			$this->load->view("players/login", $data);
+			$this->load->view("players/footer");
+		}
+
 
 	}
 

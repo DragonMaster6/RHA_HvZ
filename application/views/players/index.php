@@ -8,7 +8,7 @@
 ?>
 
 <div id="stats_container">
-
+Hello there good developers. Am i working?
 </div>
 
 <div id="calendar_container">
