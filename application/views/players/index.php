@@ -9,6 +9,8 @@
 
 <div id="stats_container">
 Hello there good developers. Am i working?
+
+I am adding something
 </div>
 
 <div id="calendar_container">
