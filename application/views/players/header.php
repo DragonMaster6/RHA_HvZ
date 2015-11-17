@@ -19,7 +19,12 @@
 
 <body>
 
-	<center> <img src="<?php echo base_url('assets/pics/hvz-logo.jpg'); ?>"> </center>
+	<center> <img src="<?php echo base_url('assets/pics/hvz-logo.jpg'); ?>">
 	<div id="menu_container">
+		<button id="session_btn">Session(notification)</button>
+		<button id="contact_btn">Contact GM</button>
+		<button id="profile_btn">Profile</button>
+		<button id="logout_btn">Logout</button>
 	</div>
+	</center>
 	

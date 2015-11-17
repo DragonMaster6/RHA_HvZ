@@ -17,9 +17,12 @@
 </div>
 
 <div id="calendar_container">
-
+	<div id="calendar_header">
+	</div>
+	<div id="calendar">
+	</div>
 </div>
 
 <div id="zombie_tool_container">
-
+This is where the kill tool and zombie starve counter will go
 </div>
