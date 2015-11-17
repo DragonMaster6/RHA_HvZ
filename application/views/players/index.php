@@ -8,12 +8,12 @@
 ?>
 
 <div id="stats_container">
-<button id="stats_btn"> Stats </button>
-<button id="sList_btn"> Survivors </button>
+	<button id="stats_btn"> Stats </button>
+	<button id="sList_btn"> Survivors </button>
 
-<div id="data_container">
-	testing this container
-</div>
+	<div id="data_container">
+		testing this container
+	</div>
 </div>
 
 <div id="calendar_container">

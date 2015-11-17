@@ -14,6 +14,7 @@
 	?>
 	<script src="<?php echo base_url('assets/scripts/jquery-2.1.4.min.js');?>"></script>
 	<script src="<?php echo base_url('assets/scripts/main.js');?>"></script>
+	<script src="<?php echo base_url('assets/scripts/calendar.js');?>"></script>
 </head>
 
 <body>

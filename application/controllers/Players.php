@@ -31,6 +31,9 @@ class Players extends CI_Controller{
 
 		// Render appropriate view
 		// to a logic switch. If the user is not signed in, automatically display the login page
+		$this->load->view("players/header");
+		$this->load->view("players/index");
+		$this->load->view("players/footer");
 	}
 
 	// Main login screen for users not currently authenticated
@@ -54,9 +57,11 @@ class Players extends CI_Controller{
 		if($isAuth != -1)
 		{
 			$_SESSION["pID"] = $isAuth;
-			$this->load->view("players/header");
+/*			$this->load->view("players/header");
 			$this->load->view("players/index");
 			$this->load->view("players/footer");
+*/
+			$this->index();
 		}
 		else
 		{
