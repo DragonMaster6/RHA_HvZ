@@ -24,7 +24,7 @@ class player_model extends CI_Model{
 		$auth_result = $query->result_array();
 		if (!empty($auth_result))
 		{
-			$result = $auth_result[0];
+			$result = $auth_result[0]["pID"];
 		}
 		return $result;
 	}

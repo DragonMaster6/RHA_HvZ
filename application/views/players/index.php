@@ -6,13 +6,14 @@
  *			current scores, new games, objectives, and change their profile when needed
 */
 ?>
+<input type = "hidden" id = "player" value = "<?php echo $pID;?>">
+<input type = "hidden" id = "session" value = "<?php echo $sID;?>">
 
 <div id="stats_container">
 	<button id="stats_btn"> Stats </button>
 	<button id="sList_btn"> Survivors </button>
 
 	<div id="data_container">
-		testing this container
 	</div>
 </div>
 

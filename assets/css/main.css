@@ -5,7 +5,7 @@
 */
 body{
 	background-color: #666666; /*#009A0D;*/
-	background-image: url("../pics/background.jpg");
+	/*background-image: url("../pics/background.jpg"); */
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;

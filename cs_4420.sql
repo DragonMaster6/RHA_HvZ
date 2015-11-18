@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2015 at 11:02 PM
+-- Generation Time: Nov 19, 2015 at 12:28 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `gamesession` (
 --
 
 INSERT INTO `gamesession` (`sID`, `gType`, `dateStart`, `dateFinish`, `topH`, `topZ`) VALUES
-(1, 1, '2015-11-25 00:00:00', '2015-12-09 00:00:00', 0, 0);
+(1, 1, '2015-11-17 00:00:00', '2015-12-09 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 

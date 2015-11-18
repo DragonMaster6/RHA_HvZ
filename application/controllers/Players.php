@@ -31,8 +31,11 @@ class Players extends CI_Controller{
 		// Render appropriate view
 		// to a logic switch. If the user is not signed in, automatically display the login page
 		if(isset($_SESSION['pID'])){
+			$data["pID"] = $_SESSION["pID"];
+			$data["sID"] = $this->gamesession_model->getCurrentSession();
+			//$data["stats"] = $this->gamestats_model->getStats(1, $pID);
 			$this->load->view("players/header");
-			$this->load->view("players/index");
+			$this->load->view("players/index", $data);
 			$this->load->view("players/footer");
 		}else{
 			redirect('players/start');
@@ -78,6 +81,14 @@ class Players extends CI_Controller{
 		$_SESSION['pID'] = null;
 		redirect('players/start');
 		
+	}
+
+	public function playerStats()
+	{
+		$sID = $this->input->post('sID');
+		$pID = $this->input->post('pID');
+		$data["stats"] = $this->gamestats_model->getStats($sID, $pID);
+		echo json_encode($data);
 	}
 
 // DELETE methods go here

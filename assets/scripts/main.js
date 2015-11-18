@@ -5,10 +5,38 @@
 */
 
 $(document).ready(function(){
+	var SITE_DOMAIN = "http://localhost/index.php/";
+	var BASE_DOMAIN = "http://localhost/";
+
+	
+	getStats();
 	$("#stats_btn").on("click", function(){
-		$("#data_container").html("<h3> This is a test of the Data Display </h3>");
+		getStats();
 	});
 	$("#sList_btn").on("click", function(){
 		$("#data_container").html("<h3> This is a test of the Survivor List </h3>");
 	});
+
+	function getStats()
+	{
+		var id = $("#player").val();
+		var session = $("#session").val();
+		if (session != -1)
+		{
+			$.ajax({
+				type: "post", 
+				url: SITE_DOMAIN+"players/stats",
+				dataType: "json",
+				data: {sID: session, pID: id}
+			})
+			.done(function(msg){
+				var stats = msg.stats;
+				var htmlOut = "lastKill: "+stats["lastKill"]+"<br> originalZ: "+stats["originalZ"];
+				$("#data_container").html(htmlOut);
+			})
+			.fail(function(){
+				//alert("Getting stats failed");
+			});
+		}
+	}
 });

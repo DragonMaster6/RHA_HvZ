@@ -20,10 +20,11 @@ class gamestats_model extends CI_Model{
 
 // READ methods
 	// Ben Matson 11/16: Note that you might need the $sID to pick the correct game other wise you will get a lot of tuples since the player has played many games
-	public function getStats ($pID)
+	public function getStats ($sID, $pID)
 	{
-		$query = $this->db->query("select hScore, zScore, lastKill from gamestats where pID =".$pID);
+		$query = $this->db->query("select hScore, zScore, lastKill, originalZ from gamestats where pID =".$pID." and sID =".$sID);
 		$stats = $query->result_array();
+		return $stats[0];
 		
 	}
 
