@@ -9,8 +9,9 @@
 <?php echo $error;?>
 </div>
 
+<center>
 <form action = "<?php echo site_url('players/login');?>" method = "post">
-
+<div id="login_container">
 <table>
 	<tr>
 		<th> Login </th>
@@ -33,4 +34,6 @@
 		</td>
 		</tr>
 </table>
+</div>
 </form>
+</center>

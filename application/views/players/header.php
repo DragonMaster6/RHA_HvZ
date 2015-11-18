@@ -24,7 +24,7 @@
 		<button id="session_btn">Session(notification)</button>
 		<button id="contact_btn">Contact GM</button>
 		<button id="profile_btn">Profile</button>
-		<button id="logout_btn">Logout</button>
+		<button id="logout_btn" onClick="window.location ='<?php echo site_url('players/logout'); ?>'"> Logout </button>
 	</div>
 	</center>
 	

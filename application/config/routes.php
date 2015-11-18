@@ -51,9 +51,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 // Player stat specific 
-
+$route['players/logout'] = 'players/logout';
+$route['players/login'] = 'players/login';
 $route['players/profile/(:any)'] = 'players/show/$1';
 $route['players/main'] = 'players/index';
+
 $route['default_controller'] = 'players/start';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

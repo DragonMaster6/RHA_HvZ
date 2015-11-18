@@ -11,8 +11,14 @@ body{
 	background-size: cover;
 }
 
+/****** Login Styling *******/
+#login_container{
+	background-color: #AAAAAA;
+	width: 50%;
+}
 
-/****** Player Statys Styling ********/
+
+/****** Player Stats Styling ********/
 #stats_container{
 	background-color: #AAAAAA;
 	width: 30%;
