@@ -31,7 +31,7 @@ $(document).ready(function(){
 			})
 			.done(function(msg){
 				var stats = msg.stats;
-				var htmlOut = "lastKill: "+stats["lastKill"]+"<br> originalZ: "+stats["originalZ"];
+				var htmlOut = "Welcome "+stats["dname"]+"<br> hScore: "+stats["hScore"]+"<br> zScore: "+stats["zScore"]+"<br> lastKill: "+stats["lastKill"]+"<br> originalZ: "+stats["originalZ"];
 				$("#data_container").html(htmlOut);
 			})
 			.fail(function(){

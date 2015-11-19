@@ -88,6 +88,7 @@ class Players extends CI_Controller{
 		$sID = $this->input->post('sID');
 		$pID = $this->input->post('pID');
 		$data["stats"] = $this->gamestats_model->getStats($sID, $pID);
+		//$data["playerInfo"] = $this->player_model->getPlayerStats($pID);
 		echo json_encode($data);
 	}
 

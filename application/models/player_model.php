@@ -29,6 +29,16 @@ class player_model extends CI_Model{
 		return $result;
 	}
 
+	public function getPlayerStats($pID)
+	{
+		$query = $this->db->query("select dname from players where pID =".$pID);
+		$dName = $query->result_array();
+		if (!empty($dName))
+		{
+			$result = $dName[0]["dname"];
+		}
+		return $result;
+	}
 	// UPATE methods
 
 
