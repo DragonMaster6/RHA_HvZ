@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 // Player stat specific 
+$route['players/survivors'] = 'players/listSurvivors';
 $route['players/stats'] = 'players/playerStats';
 $route['players/logout'] = 'players/logout';
 $route['players/login'] = 'players/login';

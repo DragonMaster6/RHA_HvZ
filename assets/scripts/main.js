@@ -14,7 +14,7 @@ $(document).ready(function(){
 		getStats();
 	});
 	$("#sList_btn").on("click", function(){
-		$("#data_container").html("<h3> This is a test of the Survivor List </h3>");
+		getSurvivors();
 	});
 
 	function getStats()
@@ -32,6 +32,37 @@ $(document).ready(function(){
 			.done(function(msg){
 				var stats = msg.stats;
 				var htmlOut = "Welcome "+stats["dname"]+"<br> hScore: "+stats["hScore"]+"<br> zScore: "+stats["zScore"]+"<br> lastKill: "+stats["lastKill"]+"<br> originalZ: "+stats["originalZ"];
+				$("#data_container").html(htmlOut);
+			})
+			.fail(function(){
+				//alert("Getting stats failed");
+			});
+		}
+	}
+
+	function getSurvivors()
+	{
+		var session = $("#session").val();
+		var htmlOut = "";
+		if (session != -1)
+		{
+			$.ajax({
+				type: "post", 
+				url: SITE_DOMAIN+"players/survivors",
+				dataType: "json",
+				data: {sID: session}
+			})
+			.done(function(msg){
+				var survivors = msg.survivors;
+				var zombies = msg.zombies;
+				$.each(survivors, function(index){
+					htmlOut += "<div>" + survivors[index]['fname'] + " " + survivors[index]['lname'] + "</div> <br>";
+
+				}); 
+				$.each(zombies, function(index){
+					htmlOut += "<div class = 'zombie_list'>" + zombies[index]['fname'] + " " + zombies[index]['lname'] + "</div> <br>";
+
+				}); 
 				$("#data_container").html(htmlOut);
 			})
 			.fail(function(){

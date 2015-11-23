@@ -27,6 +27,14 @@ body{
 	margin-right: 10px;
 }
 
+.zombie_list {
+	color: green;
+}
+
+.departed_list {
+	color: red;
+	text-decoration: line-through;
+}
 
 /****** Calendar Styling  *******/
 #calendar_container{

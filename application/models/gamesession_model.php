@@ -29,6 +29,7 @@ class gamesession_model extends CI_Model{
 		}
 		return $result;
 	}
+
 // UPDATE methods
 
 

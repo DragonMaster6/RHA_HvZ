@@ -92,5 +92,42 @@ class Players extends CI_Controller{
 		echo json_encode($data);
 	}
 
+	public function listSurvivors()
+	{
+		$sID = $this->input->post('sID');
+		$playerList = $this->gamestats_model->getPlayers($sID);
+		$data["survivors"] = [];
+		$data["zombies"] = [];
+		$data["departed"] = [];
+		$currentDateTime = strtotime(date("Y-m-d H:i:s"));
+		$starveLimit = "";
+
+		foreach ($playerList as $player)
+		{
+			if ($player['hScore'] != NULL)
+			{
+				echo date("Y-m-d H:i:s")."\n";
+				echo ($currentDateTime - (strtotime($player['lastKill']))+ 28800)."\n";
+				echo date_diff($currentDateTime, strtotime($player['lastKill']));
+				if (1==0)
+				{
+					array_push($data["departed"], $player);
+				}
+				else
+				{
+					array_push($data["zombies"], $player);
+				}
+				
+			}
+			else
+			{
+				array_push($data["survivors"], $player);
+			}
+
+		}
+		echo json_encode($data);
+
+	}
+
 // DELETE methods go here
 }
