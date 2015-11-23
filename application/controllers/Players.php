@@ -99,6 +99,8 @@ class Players extends CI_Controller{
 		$data["survivors"] = [];
 		$data["zombies"] = [];
 		$data["departed"] = [];
+		// Set the default timezone to the mountain time zone
+		date_default_timezone_set("America/Denver");
 		$currentDateTime = strtotime(date("Y-m-d H:i:s"));
 		$starveLimit = "";
 
@@ -106,10 +108,7 @@ class Players extends CI_Controller{
 		{
 			if ($player['hScore'] != NULL)
 			{
-				echo date("Y-m-d H:i:s")."\n";
-				echo ($currentDateTime - (strtotime($player['lastKill']))+ 28800)."\n";
-				echo date_diff($currentDateTime, strtotime($player['lastKill']));
-				if (1==0)
+				if ($currentDateTime - (strtotime($player['lastKill'])) > 172800)
 				{
 					array_push($data["departed"], $player);
 				}
