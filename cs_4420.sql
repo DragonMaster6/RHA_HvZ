@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2015 at 12:28 AM
+-- Generation Time: Nov 24, 2015 at 12:29 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `gamestats` (
 
 INSERT INTO `gamestats` (`sID`, `pID`, `badge`, `hScore`, `zScore`, `lastKill`, `originalZ`) VALUES
 (1, 1, 111112, NULL, 0, NULL, 0),
-(1, 2, 264982, NULL, 0, NULL, 0),
+(1, 2, 264982, '2015-11-23 14:00:00', 1, '2015-11-23 14:20:14', 0),
 (1, 4, 444444, NULL, 0, NULL, 0),
 (1, 6, 666666, NULL, 0, NULL, 1);
 
