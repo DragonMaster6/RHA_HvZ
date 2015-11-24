@@ -24,6 +24,16 @@
 	</div>
 </div>
 
-<div id="zombie_tool_container">
-This is where the kill tool and zombie starve counter will go
-</div>
+<?php
+	if($isZombie){
+		date_default_timezone_get("America/Denver");
+		$current = strtotime(date("Y-m-d H:i:s"));
+		$lastK = strtotime($starve_count);
+		$starve = 172800 - ($current - $lastK);
+		echo "<div id='zombie_tool_container'>
+		<input type='text' id='killNum'>
+		<button id='kill_btn'>Kill</button><div id='countdown'>".$starve."
+		</div>	
+		</div>";
+	}
+?>

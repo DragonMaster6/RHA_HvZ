@@ -17,6 +17,23 @@ $(document).ready(function(){
 		getSurvivors();
 	});
 
+
+	// Get the zombie counter and start the count down
+	if($("#zombie_tool_container").length != 0){
+		// the person is a zombie, now extract the time from the other div
+		var remaining = $("#countdown").html();
+		var timer = setInterval(function(){
+			var hour = Math.floor(remaining/60/60);
+			var min = Math.floor((remaining/60)%60);
+			var sec = Math.floor(remaining%60);
+			$("#countdown").html(hour+":"+min+":"+sec);
+			remaining -=1;
+		}, 1000);
+
+
+	}
+
+/********* Misc Functions **************/
 	function getStats()
 	{
 		var id = $("#player").val();
@@ -40,6 +57,7 @@ $(document).ready(function(){
 		}
 	}
 
+	// Displays the list of survivors in a current game
 	function getSurvivors()
 	{
 		var session = $("#session").val();
@@ -56,11 +74,11 @@ $(document).ready(function(){
 				var survivors = msg.survivors;
 				var zombies = msg.zombies;
 				$.each(survivors, function(index){
-					htmlOut += "<div>" + survivors[index]['fname'] + " " + survivors[index]['lname'] + "</div> <br>";
+					htmlOut += "<div>" + survivors[index]['fname'] + " " + survivors[index]['lname'] + "</div>";
 
 				}); 
 				$.each(zombies, function(index){
-					htmlOut += "<div class = 'zombie_list'>" + zombies[index]['fname'] + " " + zombies[index]['lname'] + "</div> <br>";
+					htmlOut += "<div class = 'zombie_list'>" + zombies[index]['fname'] + " " + zombies[index]['lname'] + "</div>";
 
 				}); 
 				$("#data_container").html(htmlOut);

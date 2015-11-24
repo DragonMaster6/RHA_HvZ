@@ -27,12 +27,21 @@ class Players extends CI_Controller{
 
 	// Main screen for the user - displays current game play
 	public function index(){
-
 		// Render appropriate view
 		// to a logic switch. If the user is not signed in, automatically display the login page
 		if(isset($_SESSION['pID'])){
+			// set any global variables for this particular view
 			$data["pID"] = $_SESSION["pID"];
 			$data["sID"] = $this->gamesession_model->getCurrentSession();
+
+			// Check to make sure if the player is a zombie that they haven't starved
+			// (NOTE: We will need to check the game type later to see if starvation is allowed)
+			$data["inGame"] = $this->gamestats_model->inGame($data["sID"], $data["pID"]);
+			$data["isZombie"] = $this->gamestats_model->isZombie($data["sID"], $data["pID"]);
+			if($data["isZombie"]){
+				$data["starve_count"] = $this->gamestats_model->getStats($data["sID"], $data["pID"])["lastKill"];
+			}
+
 			//$data["stats"] = $this->gamestats_model->getStats(1, $pID);
 			$this->load->view("players/header");
 			$this->load->view("players/index", $data);
@@ -92,6 +101,8 @@ class Players extends CI_Controller{
 		echo json_encode($data);
 	}
 
+
+	// This retrieves current players in a given session from AJAX and sorts them depending on their game status
 	public function listSurvivors()
 	{
 		$sID = $this->input->post('sID');
@@ -102,13 +113,13 @@ class Players extends CI_Controller{
 		// Set the default timezone to the mountain time zone
 		date_default_timezone_set("America/Denver");
 		$currentDateTime = strtotime(date("Y-m-d H:i:s"));
-		$starveLimit = "";
+		$starveLimit = 172800;
 
 		foreach ($playerList as $player)
 		{
 			if ($player['hScore'] != NULL)
 			{
-				if ($currentDateTime - (strtotime($player['lastKill'])) > 172800)
+				if ($currentDateTime - (strtotime($player['lastKill'])) > $starveLimit)
 				{
 					array_push($data["departed"], $player);
 				}

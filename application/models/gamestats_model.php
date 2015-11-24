@@ -19,7 +19,6 @@ class gamestats_model extends CI_Model{
 
 
 // READ methods
-	// Ben Matson 11/16: Note that you might need the $sID to pick the correct game other wise you will get a lot of tuples since the player has played many games
 	public function getStats ($sID, $pID)
 	{
 		$query = $this->db->query("select dname, hScore, zScore, lastKill, originalZ from gamestats join players on gamestats.pID = players.pID where gamestats.pID =".$pID." and gamestats.sID =".$sID);
@@ -34,6 +33,38 @@ class gamestats_model extends CI_Model{
 		$players = $query->result_array();
 		return $players; 
 	}
+
+	// determines whether or not a player is in the specified game
+	public function inGame($sID, $pID, $starve=true){
+		date_default_timezone_set("America/Denver");
+		$current = strtotime(date("Y-m-d H:i:s"));
+		$starveLimit = 172800;
+		$result = TRUE;		// default to in game
+
+		// get the player stats
+		$query = $this->db->query("select * from gamestats where pID=".$pID." and sID=".$sID);
+		$player = $query->result_array()[0];
+
+		// If the player is a zombie, make sure their starve limit hasn't run out
+		if($player["hScore"] != NULL){
+			if(($current - strtotime($player["lastKill"])) > $starveLimit){
+				$result = FALSE;
+			}
+		}
+
+		return $result;
+	}
+
+	// returns if the player is a zombie or a survivor in a current session
+	public function isZombie($sID, $pID){
+		// get the player stats
+		$query = $this->db->query("select * from gamestats where pID=".$pID." and sID=".$sID);
+		$player = $query->result_array()[0];
+
+		return ($player["hScore"] != NULL);
+	}
+
+
 // UPDATE methods
 
 
