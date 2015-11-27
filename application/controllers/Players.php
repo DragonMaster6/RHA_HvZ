@@ -22,6 +22,19 @@ class Players extends CI_Controller{
 	}
 
 // CREATE methods go here
+	// sign up method to create a new player account
+	public function signup(){
+		// retrieve all the values
+		$player['fname'] = $this->input->post('fname');
+		$player['lname'] = $this->input->post('lname');
+		$player['dname'] = $this->input->post('dname');
+		$player['pass'] = $this->input->post('pass');
+		$player['gender'] = $this->input->post('gender');
+
+		$data['message'] = $this->player_model->createPlayer($player);
+
+		echo json_encode($data);
+	}
 
 // READ methods go here
 
@@ -32,14 +45,18 @@ class Players extends CI_Controller{
 		if(isset($_SESSION['pID'])){
 			// set any global variables for this particular view
 			$data["pID"] = $_SESSION["pID"];
-			$data["sID"] = $this->gamesession_model->getCurrentSession();
+			$data["sID"] = $this->gamestats_model->getCurrentSession($_SESSION['pID']);		// returns the current session that the player is in
 
 			// Check to make sure if the player is a zombie that they haven't starved
 			// (NOTE: We will need to check the game type later to see if starvation is allowed)
-			$data["inGame"] = $this->gamestats_model->inGame($data["sID"], $data["pID"]);
-			$data["isZombie"] = $this->gamestats_model->isZombie($data["sID"], $data["pID"]);
-			if($data["isZombie"]){
-				$data["starve_count"] = $this->gamestats_model->getStats($data["sID"], $data["pID"])["lastKill"];
+			if($data['sID'] != -1){
+				$data["inGame"] = $this->gamestats_model->inGame($data["sID"], $data["pID"]);
+				$data["isZombie"] = $this->gamestats_model->isZombie($data["sID"], $data["pID"]);
+				if($data["isZombie"]){
+					$data["starve_count"] = $this->gamestats_model->getStats($data["sID"], $data["pID"])["lastKill"];
+				}
+			}else{
+				$data["isZombie"] = 0;
 			}
 
 			//$data["stats"] = $this->gamestats_model->getStats(1, $pID);
@@ -53,7 +70,9 @@ class Players extends CI_Controller{
 
 	// Main login screen for users not currently authenticated
 	public function start(){
-		$data["error"] = "";
+		$data["error"] = $this->session->userdata('error');
+		unset($_SESSION['error']);
+
 		// Render views here
 		$this->load->view("players/login_header");
 		$this->load->view("players/login", $data);
@@ -76,10 +95,8 @@ class Players extends CI_Controller{
 		}
 		else
 		{
-			$data["error"] = "Invalid Username or Password";
-			$this->load->view("players/login_header");
-			$this->load->view("players/login", $data);
-			$this->load->view("players/footer");
+			$_SESSION["error"] = "Invalid Username or Password";
+			redirect("players/start");
 		}
 
 

@@ -11,10 +11,25 @@ body{
 	background-size: cover;
 }
 
+
+/******* Common containers *****/
+#error_container{
+	width: 50%;
+	background-color: #C10000;
+}
+#success_container{
+	width: 50%;
+	background-color: #12BC4A;
+}
+
 /****** Login Styling *******/
 #login_container{
 	background-color: #AAAAAA;
 	width: 50%;
+}
+#signup_container{
+	display: none;
+	margin: 10px;
 }
 
 

@@ -30,10 +30,11 @@
 		$current = strtotime(date("Y-m-d H:i:s"));
 		$lastK = strtotime($starve_count);
 		$starve = 172800 - ($current - $lastK);
-		echo "<div id='zombie_tool_container'>
-		<input type='text' id='killNum'>
-		<button id='kill_btn'>Kill</button><div id='countdown'>".$starve."
-		</div>	
-		</div>";
+		echo "<div id='zombie_tool_container'>";
+				if($starve > 0){
+					echo "<input type='text' id='killNum'><button id='kill_btn'>Kill</button>";
+				}
+				echo "<div id='countdown' style='float:right'>".$starve."</div>	
+			</div>";
 	}
 ?>

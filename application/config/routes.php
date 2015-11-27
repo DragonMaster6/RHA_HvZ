@@ -55,6 +55,7 @@ $route['players/survivors'] = 'players/listSurvivors';
 $route['players/stats'] = 'players/playerStats';
 $route['players/logout'] = 'players/logout';
 $route['players/login'] = 'players/login';
+$route['players/signup'] = 'players/signup';
 $route['players/profile/(:any)'] = 'players/show/$1';
 $route['players/main'] = 'players/index';
 

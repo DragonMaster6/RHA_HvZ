@@ -12,6 +12,35 @@ class player_model extends CI_Model{
 
 
 	// CREATE methods
+	// A new user wants to sign up so add them to the database
+	public function createPlayer($values){
+		// Escape all the values for security purposes
+		$fname = $this->db->escape($values['fname']);
+		$lname = $this->db->escape($values['lname']);
+		$dname = $this->db->escape($values['dname']);
+		$pass = $this->db->escape($values['pass']);
+		$gender = $this->db->escape($values['gender']);
+		$result = $dname." has successfully joined the survial legion. Login to continue";	// assume that there isn't another player with the same dname
+
+		// First check to make sure that there isn't another player with the same dname
+		$query = $this->db->query("select dname from players where dname=".$dname);		
+
+		if(empty($query->result_array()[0])){
+			// Submit the query
+			$query = $this->db->query("insert into players (fname,lname,dname,pass,gender
+										) values (
+										".$fname.",
+										".$lname.",
+										".$dname.",
+										".$pass.",
+										".$gender.");");
+		}else{
+			$result = "There is already an account with: ".$dname; 
+		}
+
+
+		return $result;
+	}
 
 
 	//READ methods

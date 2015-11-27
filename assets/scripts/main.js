@@ -8,14 +8,57 @@ $(document).ready(function(){
 	var SITE_DOMAIN = "http://localhost/index.php/";
 	var BASE_DOMAIN = "http://localhost/";
 
-	
-	getStats();
-	$("#stats_btn").on("click", function(){
+
+	// If the user presses the recruit button
+	$("#recruit_btn").on("click", function(){
+		// retrieve all the fields
+		var gender;
+		$(".gender_in").each(function(){
+			if($(this).prop("checked")){
+				gender = $(this).val();
+			}
+		});
+
+		var data = {
+			fname: $("#fname_in").val(),
+			lname: $("#lname_in").val(),
+			dname: $("#dname_in").val(),
+			pass: $("#pass_in").val(),
+			gender: gender
+		};
+
+		// NOTE: Be sure to check for empty fields
+		// determine if the passwords match
+		if(data.pass == $("#reenter").val()){
+			// Pass the data onto the server now
+			$.ajax({
+				type: "post",
+				url: SITE_DOMAIN+"players/signup",
+				dataType: "json",
+				data: data
+			})
+			.done(function(msg){
+				$("#success_container").html(msg.message);
+			})
+			.fail(function(){
+				$("#error_container").html("Error: Something went wrong in the sign up process");
+			});
+		}else{
+			$("#error_container").html("Passwords do not match");
+		}
+	});
+
+
+	// determine if the player is logged in
+	if($("#player").length != 0){
 		getStats();
-	});
-	$("#sList_btn").on("click", function(){
-		getSurvivors();
-	});
+		$("#stats_btn").on("click", function(){
+			getStats();
+		});
+		$("#sList_btn").on("click", function(){
+			getSurvivors();
+		});
+	}
 
 
 	// Get the zombie counter and start the count down
@@ -26,10 +69,15 @@ $(document).ready(function(){
 			var hour = Math.floor(remaining/60/60);
 			var min = Math.floor((remaining/60)%60);
 			var sec = Math.floor(remaining%60);
-			$("#countdown").html(hour+":"+min+":"+sec);
+
+			if(remaining > 0){
+				$("#countdown").html(hour+":"+min+":"+sec);
+			}else{
+				$("#countdown").html("YOU ARE DEAD");
+				clearInterval(timer);
+			}
 			remaining -=1;
 		}, 1000);
-
 
 	}
 
@@ -38,7 +86,7 @@ $(document).ready(function(){
 	{
 		var id = $("#player").val();
 		var session = $("#session").val();
-		if (session != -1)
+		if (session != -1 && session != null)
 		{
 			$.ajax({
 				type: "post", 
@@ -54,6 +102,9 @@ $(document).ready(function(){
 			.fail(function(){
 				//alert("Getting stats failed");
 			});
+		}else{
+			// display a place holder
+			$("#data_container").html("There isn't an infectious outbreak currently in place");
 		}
 	}
 
@@ -62,7 +113,7 @@ $(document).ready(function(){
 	{
 		var session = $("#session").val();
 		var htmlOut = "";
-		if (session != -1)
+		if (session != -1 && session != null)
 		{
 			$.ajax({
 				type: "post", 
@@ -86,6 +137,8 @@ $(document).ready(function(){
 			.fail(function(){
 				//alert("Getting stats failed");
 			});
+		}else{
+			$("#data_container").html("There isn't an infectious outbreak currently in place");
 		}
 	}
 });

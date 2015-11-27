@@ -34,6 +34,16 @@ class gamestats_model extends CI_Model{
 		return $players; 
 	}
 
+	// retrieves the current session id a player is currently in; -1 otherwise
+	public function getCurrentSession($pID){
+		$result = -1;		// default to no sessions
+		$query = $this->db->query("select sID from gamestats where pID=".$this->db->escape($pID));
+		if(!empty($query->result_array()[0])){
+			$result = $query->result_array()[0]['sID'];
+		}
+
+		return $result;
+	}
 	// determines whether or not a player is in the specified game
 	public function inGame($sID, $pID, $starve=true){
 		date_default_timezone_set("America/Denver");
