@@ -12,6 +12,7 @@
 <div id="stats_container">
 	<button id="stats_btn"> Stats </button>
 	<button id="sList_btn"> Survivors </button>
+	<button id="note_btn"> Alerts(num) </button>
 
 	<div id="data_container">
 	</div>

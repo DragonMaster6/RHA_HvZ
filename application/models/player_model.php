@@ -20,7 +20,7 @@ class player_model extends CI_Model{
 		$dname = $this->db->escape($values['dname']);
 		$pass = $this->db->escape($values['pass']);
 		$gender = $this->db->escape($values['gender']);
-		$result = $dname." has successfully joined the survial legion. Login to continue";	// assume that there isn't another player with the same dname
+		$result = $dname." has successfully joined the survival legion. Login to continue";	// assume that there isn't another player with the same dname
 
 		// First check to make sure that there isn't another player with the same dname
 		$query = $this->db->query("select dname from players where dname=".$dname);		

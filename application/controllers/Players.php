@@ -79,8 +79,6 @@ class Players extends CI_Controller{
 		$this->load->view("players/footer");
 	}
 
-// UPDATE methods go here
-
 	// this will handle the login transaction
 	public function login(){
 		$username = $this->input->post("username");
@@ -155,6 +153,40 @@ class Players extends CI_Controller{
 		echo json_encode($data);
 
 	}
+
+	//This retrieves ongoing game sessions and alerts
+	public function getAlerts()
+	{
+		$pID = $this->input->post('pID');
+		$sID = $this->input->post('sID');
+
+		$playerSessions = $this->gamestats_model->getJoinedSessions($pID);
+		$sessions = $this->gamesession_model->getSessions();
+		$data["sessionsJoined"] = [];
+		$data["sessions"] = [];
+		$data["alerts"] = "";
+
+		foreach($sessions as $session){
+			$found = false;
+			foreach($playerSessions as $pSession){
+				if($pSession['sID'] == $session['sID']){
+					array_push($data['sessionsJoined'], $session);
+					$found = true;
+					break;
+				}
+			}
+
+			// determine if a player joined the session or not
+			if(!$found){
+				array_push($data["sessions"],$session);
+			}
+		}
+
+
+		echo json_encode($data);	
+	}
+
+// UPDATE methods go here
 
 // DELETE methods go here
 }

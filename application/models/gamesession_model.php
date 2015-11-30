@@ -14,16 +14,16 @@ class gamesession_model extends CI_Model{
 
 
 // READ methods
-	public function getCurrentSession()
-	{	$result = -1;
-		$query = $this->db->query("select sID from gamesession where dateStart <= NOW() and dateFinish >= NOW()");
-		$sID = $query->result_array();
-		if (!empty($sID))
-		{
-			$result = $sID[0]["sID"];
-		}
-		return $result;
+	public function getSessions()
+	{	
+		$query = $this->db->query("select * from gamesession where dateFinish >= NOW()");
+		$sessions = $query->result_array();
+		
+		return $sessions;
 	}
+
+
+
 
 // UPDATE methods
 

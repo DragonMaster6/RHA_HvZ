@@ -44,6 +44,19 @@ class gamestats_model extends CI_Model{
 
 		return $result;
 	}
+
+	// Retrieve all the sessions that the player has joined
+	public function getJoinedSessions($pID){
+		$result = -1;		// possibility the user has not joined a session
+		$query = $this->db->query("select s.sID, s.dateStart, s.dateFinish from gamestats gs join gamesession s on gs.sID=s.sID where gs.pID=".$pID);
+		if(!empty($query->result_array())){
+			$result = $query->result_array();
+		}
+
+		return $result;
+	}
+
+
 	// determines whether or not a player is in the specified game
 	public function inGame($sID, $pID, $starve=true){
 		date_default_timezone_set("America/Denver");

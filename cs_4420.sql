@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2015 at 12:29 AM
+-- Generation Time: Dec 01, 2015 at 12:20 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -47,19 +47,21 @@ INSERT INTO `game` (`gID`, `title`, `description`) VALUES
 
 CREATE TABLE IF NOT EXISTS `gamesession` (
   `sID` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
   `gType` int(11) NOT NULL,
   `dateStart` datetime NOT NULL,
   `dateFinish` datetime DEFAULT NULL,
   `topH` int(11) NOT NULL,
   `topZ` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gamesession`
 --
 
-INSERT INTO `gamesession` (`sID`, `gType`, `dateStart`, `dateFinish`, `topH`, `topZ`) VALUES
-(1, 1, '2015-11-17 00:00:00', '2015-12-09 00:00:00', 0, 0);
+INSERT INTO `gamesession` (`sID`, `title`, `gType`, `dateStart`, `dateFinish`, `topH`, `topZ`) VALUES
+(1, 'The Cold Virus Begins', 1, '2015-11-17 00:00:00', '2015-12-09 00:00:00', 0, 0),
+(2, 'Project Virus Cold', 1, '2015-12-14 00:00:00', '2015-12-21 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -83,9 +85,10 @@ CREATE TABLE IF NOT EXISTS `gamestats` (
 
 INSERT INTO `gamestats` (`sID`, `pID`, `badge`, `hScore`, `zScore`, `lastKill`, `originalZ`) VALUES
 (1, 1, 111112, NULL, 0, NULL, 0),
-(1, 2, 264982, '2015-11-23 14:00:00', 1, '2015-11-23 14:20:14', 0),
+(1, 2, 264982, '2015-11-23 14:00:00', 1, '2015-11-25 11:20:14', 0),
 (1, 4, 444444, NULL, 0, NULL, 0),
-(1, 6, 666666, NULL, 0, NULL, 1);
+(1, 6, 666666, NULL, 0, NULL, 1),
+(2, 2, 458578, NULL, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -98,6 +101,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `fname` varchar(255) NOT NULL,
   `lname` varchar(255) NOT NULL,
   `dname` varchar(255) NOT NULL,
+  `email` varchar(256) NOT NULL,
   `pass` varchar(10) NOT NULL,
   `gender` char(1) NOT NULL,
   `gm` int(11) NOT NULL DEFAULT '0',
@@ -108,13 +112,13 @@ CREATE TABLE IF NOT EXISTS `players` (
 -- Dumping data for table `players`
 --
 
-INSERT INTO `players` (`pID`, `fname`, `lname`, `dname`, `pass`, `gender`, `gm`, `gameCount`) VALUES
-(1, 'Ben', 'Matson', 'dragonMaster', 'dragon', 'M', 1, 0),
-(2, 'Ben', 'Lexa', 'Crudball', 'ball', 'M', 1, 0),
-(3, 'John', 'Doe', 'TurtleDoe', 'turtle', 'M', 0, 0),
-(4, 'Jill', 'Hill', 'fairyTale', 'jack', 'F', 0, 0),
-(5, 'Billy', 'Bob', 'Joe', 'joe', 'M', 0, 0),
-(6, 'Penelope', 'Hutchinson', 'theDestroyer', 'destroy', 'F', 0, 0);
+INSERT INTO `players` (`pID`, `fname`, `lname`, `dname`, `email`, `pass`, `gender`, `gm`, `gameCount`) VALUES
+(1, 'Ben', 'Matson', 'dragonMaster', '', 'dragon', 'M', 1, 0),
+(2, 'Ben', 'Lexa', 'Crudball', '', 'ball', 'M', 1, 0),
+(3, 'John', 'Doe', 'TurtleDoe', '', 'turtle', 'M', 0, 0),
+(4, 'Jill', 'Hill', 'fairyTale', '', 'jack', 'F', 0, 0),
+(5, 'Billy', 'Bob', 'Joe', '', 'joe', 'M', 0, 0),
+(6, 'Penelope', 'Hutchinson', 'theDestroyer', '', 'destroy', 'F', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -157,7 +161,7 @@ ALTER TABLE `game`
 -- AUTO_INCREMENT for table `gamesession`
 --
 ALTER TABLE `gamesession`
-  MODIFY `sID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `sID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `players`
 --

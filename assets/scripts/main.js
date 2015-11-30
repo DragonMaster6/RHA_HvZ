@@ -49,7 +49,7 @@ $(document).ready(function(){
 	});
 
 
-	// determine if the player is logged in
+	// determine if the player is logged in and display the dashboard
 	if($("#player").length != 0){
 		getStats();
 		$("#stats_btn").on("click", function(){
@@ -57,6 +57,9 @@ $(document).ready(function(){
 		});
 		$("#sList_btn").on("click", function(){
 			getSurvivors();
+		});
+		$("#note_btn").on("click", function(){
+			getAlerts();
 		});
 	}
 
@@ -124,6 +127,7 @@ $(document).ready(function(){
 			.done(function(msg){
 				var survivors = msg.survivors;
 				var zombies = msg.zombies;
+				var departed = msg.departed;
 				$.each(survivors, function(index){
 					htmlOut += "<div>" + survivors[index]['fname'] + " " + survivors[index]['lname'] + "</div>";
 
@@ -132,6 +136,10 @@ $(document).ready(function(){
 					htmlOut += "<div class = 'zombie_list'>" + zombies[index]['fname'] + " " + zombies[index]['lname'] + "</div>";
 
 				}); 
+				$.each(departed, function(index){
+					htmlOut += "<div class = 'departed_list'>" + departed[index]['fname'] + " " + departed[index]['lname'] + "</div>";
+
+				});
 				$("#data_container").html(htmlOut);
 			})
 			.fail(function(){
@@ -140,5 +148,22 @@ $(document).ready(function(){
 		}else{
 			$("#data_container").html("There isn't an infectious outbreak currently in place");
 		}
+	}
+
+	//Retrieves alerts and sessions from game sessions and GM alerts
+	function getAlerts()
+	{
+		var session = $("#session").val();
+		var pID = $("#player").val();
+
+		$.ajax({
+				type: "post", 
+				url: SITE_DOMAIN+"players/alerts",
+				dataType: "json",
+				data: {sID: session, pID: pID}
+			})
+			.done(function(msg){
+				 
+			});
 	}
 });
