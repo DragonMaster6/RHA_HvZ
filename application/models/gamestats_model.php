@@ -48,7 +48,7 @@ class gamestats_model extends CI_Model{
 	// Retrieve all the sessions that the player has joined
 	public function getJoinedSessions($pID){
 		$result = -1;		// possibility the user has not joined a session
-		$query = $this->db->query("select s.sID, s.dateStart, s.dateFinish from gamestats gs join gamesession s on gs.sID=s.sID where gs.pID=".$pID);
+		$query = $this->db->query("select s.sID, s.title, s.dateStart, s.dateFinish from gamestats gs join gamesession s on gs.sID=s.sID where gs.pID=".$pID);
 		if(!empty($query->result_array())){
 			$result = $query->result_array();
 		}

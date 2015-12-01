@@ -5,7 +5,7 @@
 */
 body{
 	background-color: #666666; /*#009A0D;*/
-	/*background-image: url("../pics/background.jpg"); */
+	background-image: url("../pics/background.jpg"); 
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
@@ -49,6 +49,16 @@ body{
 .departed_list {
 	color: red;
 	text-decoration: line-through;
+}
+
+.joinedSession_list {
+	background-opacity: 0.3;
+	background-color: green;
+}
+
+.session_list {
+	background-color: yellow;
+	background-opacity: 0.3;
 }
 
 /****** Calendar Styling  *******/

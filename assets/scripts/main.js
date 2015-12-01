@@ -155,6 +155,7 @@ $(document).ready(function(){
 	{
 		var session = $("#session").val();
 		var pID = $("#player").val();
+		var htmlOut = "";
 
 		$.ajax({
 				type: "post", 
@@ -163,7 +164,15 @@ $(document).ready(function(){
 				data: {sID: session, pID: pID}
 			})
 			.done(function(msg){
-				 
+				 var sessionsJoined = msg.sessionsJoined;
+				 var sessions = msg.sessions
+				 $.each(sessionsJoined, function(index){
+				 	htmlOut += "<div class = joinedSession_list>" + sessionsJoined[index]['title'] + " " + sessionsJoined[index]['dateStart'] + " to " + sessionsJoined[index]['dateFinish'] + "</div>";
+				 });
+				 $.each(sessions, function(index){
+				 	htmlOut += "<div class = session_list>" + sessions[index]['title'] + " " + sessions[index]['dateStart'] + " to " + sessions[index]['dateFinish'] + "</div>";
+				 });
+				 $("#data_container").html(htmlOut);
 			});
 	}
 });
