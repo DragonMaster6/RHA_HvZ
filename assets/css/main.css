@@ -35,11 +35,26 @@ body{
 
 /****** Player Stats Styling ********/
 #stats_container{
-	background-color: #AAAAAA;
+	/*background-color: #AAAAAA;*/
+/*	background-image: url("../pics/biohazard_back.jpg");
+	background-size: contain;
+	background-repeat: no-repeat;
+*/
+	background-color: black;
 	width: 30%;
+	height: auto;
 	float: left;
 	margin: 5px;
 	margin-right: 10px;
+	opacity: 0.9;
+}
+
+#data_container{
+	background-color: #AAAAAA;
+	opacity: 0.9;
+	font-weight: bold;
+	margin: 10px;
+	height: 500px;
 }
 
 .zombie_list {
@@ -52,13 +67,13 @@ body{
 }
 
 .joinedSession_list {
-	background-opacity: 0.3;
+	opacity: 0.8;
 	background-color: green;
 }
 
 .session_list {
 	background-color: yellow;
-	background-opacity: 0.3;
+	opacity: 0.8;
 }
 
 /****** Calendar Styling  *******/
@@ -67,6 +82,8 @@ body{
 	border: 2px solid black;
 	float: left;
 	width: 65%;
+	opacity: 0.9;
+	font-weight: bold;
 }
 #calendar_header{
 	font-size: 250%;
@@ -80,6 +97,27 @@ body{
 	height: 110;
 	float: left;
 	margin: 1px;
+	
+}
+
+.gameDay{
+	border: 1px solid black;
+	width: calc(100%/7.5);
+	height: 110;
+	float: left;
+	margin: 1px;
+	background-color: green;
+	
+}
+
+.waitDay{
+	border: 1px solid black;
+	width: calc(100%/7.5);
+	height: 110;
+	float: left;
+	margin: 1px;
+	background-color: yellow;
+	
 }
 
 .done_day{

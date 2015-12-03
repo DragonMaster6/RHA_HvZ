@@ -10,9 +10,11 @@
 <input type = "hidden" id = "session" value = "<?php echo $sID;?>">
 
 <div id="stats_container">
-	<button id="stats_btn"> Stats </button>
-	<button id="sList_btn"> Survivors </button>
-	<button id="note_btn"> Alerts(num) </button>
+	<center>
+		<button id="stats_btn"> Stats </button>
+		<button id="sList_btn"> Survivors </button>
+		<button id="note_btn"> Alerts(num) </button>
+	</center>
 
 	<div id="data_container">
 	</div>
