@@ -170,9 +170,26 @@ $(document).ready(function(){
 				 	htmlOut += "<div class = joinedSession_list>" + sessionsJoined[index]['title'] + " " + sessionsJoined[index]['dateStart'] + " to " + sessionsJoined[index]['dateFinish'] + "</div>";
 				 });
 				 $.each(sessions, function(index){
-				 	htmlOut += "<div class = session_list>" + sessions[index]['title'] + " " + sessions[index]['dateStart'] + " to " + sessions[index]['dateFinish'] + "</div>";
+				 	htmlOut += "<div class = session_list>" + sessions[index]['title'] + " " + sessions[index]['dateStart'] + " to " + sessions[index]['dateFinish'] + "<button class = 'join_btn' value= "+ sessions[index]['sID']+"> Join </button> </div>";
 				 });
 				 $("#data_container").html(htmlOut);
 			});
 	}
+
+	$("#data_container").on("click", '.join_btn', function ()
+	{
+		var session = $(this).val();
+		var pID = $("#player").val();
+
+		$.ajax({
+				type: "post", 
+				url: SITE_DOMAIN+"players/join",
+				dataType: "json",
+				data: {sID: session, pID: pID}
+			})
+		.done(function(msg){
+			getAlerts();
+		});
+	});
+
 });

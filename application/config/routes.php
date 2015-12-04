@@ -57,6 +57,7 @@ $route['players/alerts'] = 'players/getAlerts';
 $route['players/logout'] = 'players/logout';
 $route['players/login'] = 'players/login';
 $route['players/signup'] = 'players/signup';
+$route['players/join'] = 'players/join';
 $route['players/profile/(:any)'] = 'players/show/$1';
 $route['players/main'] = 'players/index';
 

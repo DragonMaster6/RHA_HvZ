@@ -22,6 +22,14 @@ class gamesession_model extends CI_Model{
 		return $sessions;
 	}
 
+	public function getSessionTitle($sID)
+	{
+		$query = $this->db->query("select title from gamesession where sID = ".$sID);
+		$title = $query->result_array();
+
+		return $title[0]['title'];
+	}
+
 
 
 

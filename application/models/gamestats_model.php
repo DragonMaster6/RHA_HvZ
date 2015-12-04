@@ -16,7 +16,37 @@ class gamestats_model extends CI_Model{
 	}
 
 // CREATE methods
+	//Add a player to a session by creating a game stats entry
+	public function joinSession($sID, $pID, $title, $currentBadges)
+	{
+		$success = 0;
+		$returnText = "Successfully joined the ".$title." session";
 
+		$flag = 0;
+
+		$index = 0;
+
+		while(1==1)
+		{
+			$badge = mt_rand(100000, 999999);
+			foreach($currentBadges as $badgeIndex)
+			{
+				if ($badgeIndex == $badge)
+				{
+					$flag = 1;
+				}
+			}
+			if ($flag == 0)
+			{
+				break;
+			}
+			$flag = 0;
+		}
+
+		$query = $this->db->query("insert into gamestats (sID, pID, badge) values (".$sID.",".$pID.",".$badge.");");
+
+		return $returnText;
+	}
 
 // READ methods
 	public function getStats ($sID, $pID)
@@ -87,6 +117,14 @@ class gamestats_model extends CI_Model{
 		return ($player["hScore"] != NULL);
 	}
 
+	public function getBadges()
+	{
+		$query = $this->db->query("select badge from gamestats");
+		$badges = $query->result_array();
+
+		return $badges;
+
+	}
 
 // UPDATE methods
 

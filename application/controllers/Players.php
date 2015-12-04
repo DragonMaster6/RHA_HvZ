@@ -36,6 +36,18 @@ class Players extends CI_Controller{
 		echo json_encode($data);
 	}
 
+	public function join()
+	{
+		$sID = $this->input->post("sID");
+		$pID = $this->input->post("pID");
+		$title = $this->gamesession_model->getSessionTitle($sID);
+		$currentBadges = $this->gamestats_model->getBadges();
+		$success = $this->gamestats_model->joinSession($sID, $pID, $title, $currentBadges);
+
+		$data['attempt'] = $success;
+		echo json_encode($data);
+	}
+
 // READ methods go here
 
 	// Main screen for the user - displays current game play
