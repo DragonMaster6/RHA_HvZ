@@ -68,6 +68,11 @@ class player_model extends CI_Model{
 		}
 		return $result;
 	}
+
+	public function getProfile($pID){
+		$query = $this->db->query("select fname, lname, dname, email, pass, gender from players where pID=".$pID);
+		return $query->result_array()[0];
+	}
 	// UPATE methods
 
 

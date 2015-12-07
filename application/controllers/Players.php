@@ -80,6 +80,12 @@ class Players extends CI_Controller{
 		}
 	}
 
+	// This gets a player's profile such as email, username, password, etc
+	public function show($pID){
+		$data["playerInfo"] = $this->player_model->getProfile($pID);
+		echo json_encode($data);
+	}
+
 	// Main login screen for users not currently authenticated
 	public function start(){
 		$data["error"] = $this->session->userdata('error');
