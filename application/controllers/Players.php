@@ -201,4 +201,15 @@ class Players extends CI_Controller{
 // UPDATE methods go here
 
 // DELETE methods go here
+
+	public function leave()
+	{
+		$sID = $this->input->post("sID");
+		$pID = $this->input->post("pID");
+		$title = $this->gamesession_model->getSessionTitle($sID);
+		$success = $this->gamestats_model->leaveSession($sID, $pID, $title);
+
+		$data['attempt'] = $success;
+		echo json_encode($data);
+	}
 }

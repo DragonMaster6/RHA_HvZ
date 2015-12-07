@@ -130,5 +130,13 @@ class gamestats_model extends CI_Model{
 
 
 // DELETE methods
+	public function leaveSession($sID, $pID, $title)
+	{
+		$success = 0;
+		$returnText = "Successfully left the ".$title." session";
 
+		$query = $this->db->query("delete from gamestats where pID=".$pID." and sID=".$sID);
+
+		return $returnText;
+	}
 }
