@@ -219,6 +219,7 @@ $(document).ready(function(){
 			})
 		.done(function(msg){
 			getAlerts();
+			displayCalendar(timeStamp.getMonth()+1);
 		});
 	});
 
@@ -235,6 +236,7 @@ $(document).ready(function(){
 			})
 		.done(function(msg){
 			getAlerts();
+			displayCalendar(timeStamp.getMonth()+1);
 		});
 	});
 
