@@ -139,4 +139,8 @@ class gamestats_model extends CI_Model{
 
 		return $returnText;
 	}
+	 public function deleteProfile($pID){
+	 	$query = $this->db->query("delete from gamestats where pID=".$pID);
+	 	return $query;
+	 }
 }

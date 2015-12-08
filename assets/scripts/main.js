@@ -7,6 +7,7 @@
 $(document).ready(function(){
 	var SITE_DOMAIN = "http://localhost/index.php/";
 	var BASE_DOMAIN = "http://localhost/";
+	var timeStamp = new Date();
 
 
 	// If the user presses the recruit button
@@ -48,13 +49,6 @@ $(document).ready(function(){
 		}
 	});
 
-	// Setup the calendar view
-	// Retrieve the current time and date
-	var timeStamp = new Date();
-	var months = ["January","Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-	displayCalendar(timeStamp.getMonth()+1);
-	$("#calendar_header").html(months[timeStamp.getMonth()]);
-
 	// Dashboard controls
 	$("#profile_btn").on("click", function(){
 		var toggled = $(this).prop("value");
@@ -81,6 +75,11 @@ $(document).ready(function(){
 
 	// determine if the player is logged in and display the dashboard
 	if($("#player").length != 0){
+		// Setup the calendar view
+		// Retrieve the current time and date
+		var months = ["January","Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		displayCalendar(timeStamp.getMonth()+1);
+		$("#calendar_header").html(months[timeStamp.getMonth()]);
 		getStats();
 		$("#stats_btn").on("click", function(){
 			getStats();
@@ -326,6 +325,23 @@ $(document).ready(function(){
 		.done(function(msg){
 			getProfile(false);
 		});
+	});
+	// This will send a request to delete the user's account
+	$("#calendar_container").on("click","#delete_profile_btn", function(){
+		// First be sure to ask the player if they want to do this
+		var response = confirm("Warning: this will delete everything you worked for and cannot be retrieved again. Continue?");
+		if(response){
+			// user has agreed to terminate their profile
+			$.ajax({
+				type: "post",
+				url: SITE_DOMAIN+"players/delete",
+			})
+			.done(function(){
+				// redirect to the main page
+				window.location = SITE_DOMAIN;
+			});
+
+		}
 	});
 
 

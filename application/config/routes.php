@@ -61,6 +61,7 @@ $route['players/join'] = 'players/join';
 $route['players/leave'] = 'players/leave';
 $route['players/update'] = 'players/update';
 $route['players/profile/(:any)'] = 'players/show/$1';
+$route['players/delete'] = 'players/delete';
 $route['players/main'] = 'players/index';
 
 $route['default_controller'] = 'players/start';

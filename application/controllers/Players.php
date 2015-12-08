@@ -233,4 +233,17 @@ class Players extends CI_Controller{
 		$data['attempt'] = $success;
 		echo json_encode($data);
 	}
+
+	// delete a player and all their data from the database
+	public function delete(){
+		$pID = $_SESSION['pID'];
+		$result = $this->player_model->deleteProfile($pID);
+		$result = $this->gamestats_model->deleteProfile($pID);
+
+		// reset the session variables
+		$_SESSION['pID'] = "";
+		$_SESSION['error'] = "Best of luck facing the zombie hordes alone";
+
+		echo json_encode($result);
+	}
 }

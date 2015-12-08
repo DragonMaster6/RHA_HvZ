@@ -89,4 +89,9 @@ class player_model extends CI_Model{
 
 
 	// DELETE methods
+
+	public function deleteProfile($pID){
+		$query = $this->db->query("delete from players where pID=".$pID);
+		return $query;
+	}
 }
