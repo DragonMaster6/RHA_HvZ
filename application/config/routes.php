@@ -59,6 +59,7 @@ $route['players/login'] = 'players/login';
 $route['players/signup'] = 'players/signup';
 $route['players/join'] = 'players/join';
 $route['players/leave'] = 'players/leave';
+$route['players/update'] = 'players/update';
 $route['players/profile/(:any)'] = 'players/show/$1';
 $route['players/main'] = 'players/index';
 

@@ -205,6 +205,21 @@ class Players extends CI_Controller{
 	}
 
 // UPDATE methods go here
+	// Method handles profile update request
+	public function update(){
+		// pull all the data out
+		$profile['pID'] = $_SESSION['pID'];
+		$profile['fname'] = $this->input->post('fname');
+		$profile['lname'] = $this->input->post('lname');
+		$profile['dname'] = $this->input->post('dname');
+		$profile['email'] = $this->input->post('email');
+		$profile['gender'] = $this->input->post('gender');
+
+		// now send it off to the database to be inputted
+		$result = $this->player_model->updateProfile($profile);
+
+		echo json_encode($result);
+	}
 
 // DELETE methods go here
 

@@ -70,10 +70,22 @@ class player_model extends CI_Model{
 	}
 
 	public function getProfile($pID){
-		$query = $this->db->query("select fname, lname, dname, email, pass, gender from players where pID=".$pID);
+		$query = $this->db->query("select fname, lname, dname, email, pass, gender, gm, gameCount from players where pID=".$pID);
 		return $query->result_array()[0];
 	}
 	// UPATE methods
+	public function updateProfile($profile){
+		$query = $this->db->query("update players set 
+										fname=".$this->db->escape($profile['fname']).",
+										lname=".$this->db->escape($profile['lname']).",
+										dname=".$this->db->escape($profile['dname']).",
+										email=".$this->db->escape($profile['email']).",
+										gender=".$this->db->escape($profile['gender'])."
+										where pID=".$profile['pID']
+								);
+
+		return $query;
+	}
 
 
 	// DELETE methods

@@ -63,7 +63,7 @@ $(document).ready(function(){
 			$(this).html("Calendar");
 
 			// fetch the user's profile
-			getProfile();
+			getProfile(false);
 
 		}else{
 			$(this).prop("value", "0");
@@ -241,8 +241,8 @@ $(document).ready(function(){
 	});
 
 
-	// Get's the user's profile information
-	function getProfile(){
+	// Get's the user's profile information depending on if it is edit mode or not
+	function getProfile(edit){
 		var htmlOut = "";
 
 		// retrieve the player's id 
@@ -256,17 +256,77 @@ $(document).ready(function(){
 		})
 		.done(function(msg){
 			var user = msg.playerInfo;
+			var gameMod = (user['gm'] == 1) ? "Yes" : "No";
+			var firstN = user['fname'];
+			var lastN = user['lname'];
+			var userN = user['dname'];
+			var email = user['email'];
+			var gender = user['gender'];
+			var buttons = "<button id='edit_profile_btn'> Edit Profile </button><button id='delete_profile_btn'> Terminate </button>";
+
+			// Display either preview mode or edit mode
+			if(edit){
+				firstN = "<input type='text' id='firstN' value='"+firstN+"'>";
+				lastN = "<input type='text' id='lastN' value='"+lastN+"'>";
+				userN = "<input type='text' id='userN' value='"+userN+"'>";
+				email = "<input type='text' id='email' value='"+email+"'>";
+				if(gender == "M"){
+					gender = "Male: <input type='radio' name='gender' class='gender' value='M' checked> Female: <input type='radio' name='gender' class='gender' value='F'>";
+				}else{
+					gender = "Male: <input type='radio' name='gender' class='gender' value='M'> Female: <input type='radio' name='gender' class='gender' value='F' checked>";
+				}
+				buttons = "<button id='submit_profile_btn'> Update Profile </button><button id='cancel_changes_btn'>Cancel</button><button id='delete_profile_btn'> Terminate </button>";
+			}
+
 			htmlOut = "<div id='player_profile'>"+
-							"First name: "+user['fname']+
-							"Last name: "+user['lname']+"<br>"+
-							"Username: "+user['dname']+"<br>"+
-							"Email: "+user['email']+"<br>"+
-							"Gender: "+user['gender']+"<br>"+
+							"First name: "+firstN+"<br>"+
+							"Last name: "+lastN+"<br>"+
+							"Username: "+userN+"<br>"+
+							"Email: "+email+"<br>"+
+							"Gender: "+gender+"<br>"+
+							"Game Moderator: "+gameMod+"<br>"+
+							"Number of games played: "+user['gameCount']+"<br><br>"+
+							buttons+
 						"</div>";
 
 			$("#calendar_container").html(htmlOut);
 		});
 	}
+
+	// This allows a player to edit their profile
+	$("#calendar_container").on("click","#edit_profile_btn", function(){
+		getProfile(true);
+	});
+	// This always a user to cancel their changes
+	$("#calendar_container").on("click","#cancel_changes_btn",function(){
+		getProfile(false);
+	});
+	// This submits the players changes to their profile
+	$("#calendar_container").on("click","#submit_profile_btn", function(){
+		var firstN = $("#firstN").val();
+		var lastN = $("#lastN").val();
+		var userN = $("#userN").val();
+		var email = $("#email").val();
+		var gender;
+		$(".gender:radio").each(function(){
+			if($(this).prop("checked")){
+				gender = $(this).val();
+			}
+		});
+
+		// might want to do some data validation here
+
+		// send ajax the new profile
+		$.ajax({
+			type: "post",
+			url: SITE_DOMAIN+"players/update",
+			dataType: "json",
+			data: {fname: firstN, lname: lastN, dname: userN, email: email, gender: gender}
+		})
+		.done(function(msg){
+			getProfile(false);
+		});
+	});
 
 
 	/******************************************'
