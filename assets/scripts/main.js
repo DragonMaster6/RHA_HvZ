@@ -8,6 +8,8 @@ $(document).ready(function(){
 	var SITE_DOMAIN = "http://localhost/index.php/";
 	var BASE_DOMAIN = "http://localhost/";
 	var timeStamp = new Date();
+	var timer;
+	var remaining;
 
 
 	// If the user presses the recruit button
@@ -99,8 +101,15 @@ $(document).ready(function(){
 	// Get the zombie counter and start the count down
 	if($("#zombie_tool_container").length != 0){
 		// the person is a zombie, now extract the time from the other div
-		var remaining = $("#countdown").html();
-		var timer = setInterval(function(){
+		remaining = $("#countdown").html();
+		countdown();
+	}
+
+/********* Misc Functions **************/
+	function countdown(){
+		clearInterval(timer);
+		remaining = $("#countdown").html();
+		timer = setInterval(function(){
 			var hour = Math.floor(remaining/60/60);
 			var min = Math.floor((remaining/60)%60);
 			var sec = Math.floor(remaining%60);
@@ -113,10 +122,8 @@ $(document).ready(function(){
 			}
 			remaining -=1;
 		}, 1000);
-
 	}
 
-/********* Misc Functions **************/
 	function getStats()
 	{
 		var id = $("#player").val();
@@ -258,8 +265,9 @@ $(document).ready(function(){
 		.done(function(msg){
 			if (msg.attempt)
 			{
-				getAlerts();
-				displayCalendar(timeStamp.getMonth()+1);
+				getStats();
+				$("#countdown").html(msg.lastkill);
+				countdown();
 				var audio = new Audio(BASE_DOMAIN+"/assets/pics/infected.wav");
 				audio.play();
 			}

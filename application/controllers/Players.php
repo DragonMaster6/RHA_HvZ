@@ -229,6 +229,13 @@ class Players extends CI_Controller{
 		$currentBadges = $this->gamestats_model->getBadges($sID);
 		$data['attempt'] = $this->gamestats_model->confirmKill($sID, $pID, $currentBadges, $enteredBadge);
 
+
+		date_default_timezone_set("America/Denver");
+		$current = strtotime(date("Y-m-d H:i:s"));
+		$lastK = strtotime($this->gamestats_model->getStats($sID, $pID)["lastKill"]);
+		$starve = 172800 - ($current - $lastK);
+		$data['lastkill'] = $starve;
+
 		echo json_encode($data);
 	}
 
