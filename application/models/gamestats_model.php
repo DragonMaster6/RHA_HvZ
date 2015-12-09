@@ -117,9 +117,9 @@ class gamestats_model extends CI_Model{
 		return ($player["hScore"] != NULL);
 	}
 
-	public function getBadges()
+	public function getBadges($sID)
 	{
-		$query = $this->db->query("select badge from gamestats");
+		$query = $this->db->query("select badge from gamestats where sID=".$sID);
 		$badges = $query->result_array();
 
 		return $badges;
@@ -127,7 +127,26 @@ class gamestats_model extends CI_Model{
 	}
 
 // UPDATE methods
+	public function confirmKill($sID, $pID, $currentBadges, $enteredBadge)
+	{
+		$flag = 0;
+		foreach($currentBadges as $badgeIndex)
+		{
+			if ($badgeIndex['badge'] == $enteredBadge && $badgeIndex['badge'] != 0)
+			{
+				$flag = 1;
+				break;
+			}
+		}
+		if ($flag == 1)
+		{
+			$query = $this->db->query("update gamestats set hScore = NOW(), lastKill = NOW(), badge = '0' where badge =".$enteredBadge." and sID=".$sID);
+			$query = $this->db->query("update gamestats set zScore=zScore+1, lastKill = NOW() where sID=".$sID." and pID=".$pID);
 
+		}
+
+		return $flag;
+	}
 
 // DELETE methods
 	public function leaveSession($sID, $pID, $title)

@@ -90,6 +90,9 @@ $(document).ready(function(){
 		$("#note_btn").on("click", function(){
 			getAlerts();
 		});
+		$("#zombie_tool_container").on("click", "#kill_btn", function(){
+			confirmKill();
+		});
 	}
 
 
@@ -239,6 +242,30 @@ $(document).ready(function(){
 		});
 	});
 
+	//function to handle the kill confimation process
+	function confirmKill()
+	{
+		var session = $("#session").val();
+		var pID = $("#player").val();
+		var enteredBadge = $("#killNum").val();
+
+		$.ajax({
+				type: "post", 
+				url: SITE_DOMAIN+"players/kill",
+				dataType: "json",
+				data: {sID: session, pID: pID, badge: enteredBadge}
+			})
+		.done(function(msg){
+			if (msg.attempt)
+			{
+				getAlerts();
+				displayCalendar(timeStamp.getMonth()+1);
+				var audio = new Audio(BASE_DOMAIN+"/assets/pics/infected.wav");
+				audio.play();
+			}
+			
+		});
+	}
 
 	// Get's the user's profile information depending on if it is edit mode or not
 	function getProfile(edit){

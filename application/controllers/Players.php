@@ -41,7 +41,7 @@ class Players extends CI_Controller{
 		$sID = $this->input->post("sID");
 		$pID = $this->input->post("pID");
 		$title = $this->gamesession_model->getSessionTitle($sID);
-		$currentBadges = $this->gamestats_model->getBadges();
+		$currentBadges = $this->gamestats_model->getBadges($sID, $pID);
 		$success = $this->gamestats_model->joinSession($sID, $pID, $title, $currentBadges);
 
 		$data['attempt'] = $success;
@@ -219,6 +219,17 @@ class Players extends CI_Controller{
 		$result = $this->player_model->updateProfile($profile);
 
 		echo json_encode($result);
+	}
+
+	public function kill()
+	{
+		$sID = $this->input->post("sID");
+		$pID = $this->input->post("pID");
+		$enteredBadge = $this->input->post("badge");
+		$currentBadges = $this->gamestats_model->getBadges($sID);
+		$data['attempt'] = $this->gamestats_model->confirmKill($sID, $pID, $currentBadges, $enteredBadge);
+
+		echo json_encode($data);
 	}
 
 // DELETE methods go here
