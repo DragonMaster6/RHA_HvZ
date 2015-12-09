@@ -10,6 +10,7 @@
 	<title> UCCS RHA Humans vs. Zombies Game site </title>
 	<?php
 		$this->load->helper("html");
+		$this->load->model("player_model");
 		echo link_tag("assets/css/main.css");
 	?>
 	<script src="<?php echo base_url('assets/scripts/jquery-2.1.4.min.js');?>"></script>
@@ -22,6 +23,11 @@
 	<center> <img src="<?php echo base_url('assets/pics/hvz-logo.jpg'); ?>">
 	<div id="menu_container">
 		<!-- Add create session button here -->
+		<?php
+			if($this->player_model->isGM($_SESSION['pID'])){
+				echo "<button id='create_session_btn'> Create Session </button>";
+			}
+		?>
 		<button id="rulebook_btn">Rule Book</button>
 		<button id="contact_btn">Contact GM</button>
 		<button id="profile_btn">Profile</button>

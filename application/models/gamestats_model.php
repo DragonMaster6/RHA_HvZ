@@ -67,7 +67,7 @@ class gamestats_model extends CI_Model{
 	// retrieves the current session id a player is currently in; -1 otherwise
 	public function getCurrentSession($pID){
 		$result = -1;		// default to no sessions
-		$query = $this->db->query("select sID from gamestats where pID=".$this->db->escape($pID));
+		$query = $this->db->query("select gs.sID from gamestats gs join gamesession s on gs.sID=s.sID where gs.pID=".$this->db->escape($pID)." and s.dateFinish > NOW() and s.dateStart < NOW()");
 		if(!empty($query->result_array()[0])){
 			$result = $query->result_array()[0]['sID'];
 		}

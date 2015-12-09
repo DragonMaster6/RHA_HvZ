@@ -73,6 +73,14 @@ class player_model extends CI_Model{
 		$query = $this->db->query("select fname, lname, dname, email, pass, gender, gm, gameCount from players where pID=".$pID);
 		return $query->result_array()[0];
 	}
+
+	// Tests if the player is a Game moderator
+	public function isGM($pID){
+		$query = $this->db->query("select gm from players where pID=".$pID);
+
+		return $query->result_array()[0]["gm"];
+	}
+
 	// UPATE methods
 	public function updateProfile($profile){
 		$query = $this->db->query("update players set 
