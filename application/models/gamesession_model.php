@@ -16,7 +16,7 @@ class gamesession_model extends CI_Model{
 // READ methods
 	public function getSessions()
 	{	
-		$query = $this->db->query("select * from gamesession where dateFinish >= NOW()");
+		$query = $this->db->query("select s.*, COUNT(gs.sID) as numPlay from gamesession s left join gamestats gs on s.sID = gs.sID where dateFinish >= NOW() group by sID order by dateStart");		// Ben Matson Edit: 12/9/15: Gathers more information on the session itself such as # of players playing
 		$sessions = $query->result_array();
 		
 		return $sessions;

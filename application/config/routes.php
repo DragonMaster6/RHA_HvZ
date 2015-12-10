@@ -50,6 +50,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
+// GameSession routes
+$rout['gamesession/index'] = 'gamesessions/index';
+
+
 // Player stat specific 
 $route['players/survivors'] = 'players/listSurvivors';
 $route['players/stats'] = 'players/playerStats';

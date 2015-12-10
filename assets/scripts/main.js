@@ -52,27 +52,23 @@ $(document).ready(function(){
 	});
 
 	// Dashboard controls
+	$("#calendar_btn").on("click", function(){
+		// Setup the calendar container the way it should be
+		$("#calendar_container").html("<div id='calendar_header'></div><div id='calendar'></div>");
+
+		// display the calendar now
+		$("#calendar_header").html(months[timeStamp.getMonth()]);
+		displayCalendar(timeStamp.getMonth()+1);
+	});
+
 	$("#profile_btn").on("click", function(){
-		var toggled = $(this).prop("value");
-		if(toggled == "" || toggled == 0){
-			$(this).prop("value", "1");
-			$(this).html("Calendar");
+		// fetch the user's profile
+		getProfile(false);
+	});
 
-			// fetch the user's profile
-			getProfile(false);
-
-		}else{
-			$(this).prop("value", "0");
-			$(this).html("Profile");
-
-			// Setup the calendar container the way it should be
-			$("#calendar_container").html("<div id='calendar_header'></div><div id='calendar'></div>");
-
-			// display the calendar now
-			$("#calendar_header").html(months[timeStamp.getMonth()]);
-			displayCalendar(timeStamp.getMonth()+1);
-		}
-
+	$("#sessions_btn").on("click",function(){
+		// The player is a gm and so display the create sessions forum
+		getSessions(false);
 	});
 
 	// determine if the player is logged in and display the dashboard
@@ -331,7 +327,7 @@ $(document).ready(function(){
 	$("#calendar_container").on("click","#edit_profile_btn", function(){
 		getProfile(true);
 	});
-	// This always a user to cancel their changes
+	// This allows a user to cancel their changes
 	$("#calendar_container").on("click","#cancel_changes_btn",function(){
 		getProfile(false);
 	});
@@ -379,17 +375,80 @@ $(document).ready(function(){
 		}
 	});
 
+	/**** This section of code displays and handles session creations ****/
+	function getSessions(edit){
+		// edit parameter determines if the display needs to show text fields
+
+		var htmlOut = "<h3> Planned Zombie Outbreaks </h3><button id='session_create_btn'> Create a new outbreak </button><br>";
+
+		// send a request to get all sessions in progress and in the future
+		$.ajax({
+			type: "post",
+			url: SITE_DOMAIN+"/gamesessions/index",
+			dataType: "json"
+		})
+		.done(function(msg){
+			var sessions = msg.sessions;
+			var games = msg.games;
+
+			$.each(sessions, function(index){
+				var session = sessions[index];
+				var game; // holds the game details specified by the session
+				var gameType = "<select id='gameType'>"; // holds the html code to display the game
+
+				// find the game type
+				$.each(games, function(gIndex){
+					var type = games[gIndex];
+					if(type['gID'] == session['gType'] && !edit){
+						game = type;
+					}else{
+						gameType += "<option value='"+type['gID']+"'>"+type['title']+"</option>";
+					}
+				});
+				gameType += "</select>";
+
+				// these variables will aid in displaying the proper features
+				var title = session['title'];
+				var start = session['dateStart'];
+				var fin = session['dateFinish'];
+
+				// check for edit mode
+				if(edit){
+					title = "<input type='text' name='title' value='"+title+"'>";
+					start = "<input type='text' name='start' value='"+start+"'>";
+					fin = "<input type='text' name='finish' value='"+fin+"'>";
+				}else{
+					gameType = game['title'];
+				}
+
+				htmlOut += "<div id='session-"+session['sID']+"' class='session_info'>"+
+								"Session Title: "+title+"<br>"+
+								"Game Type: "+gameType+"<br>"+
+								start+" to "+fin+"<br>"+
+								"Number of Players: "+session['numPlay']+"<br>"+
+								"Top Zombie: "+session['topZ']+"<br>"+
+								"Top Human(s): "+session['topH']+"<br>"+
+								"<button id='session_edit'>Edit</button><br>"+
+							"</div>";
+			});
+
+			// display the results now
+			$("#calendar_container").html(htmlOut);
+		});
+	}
+
+	// actions taken to modify/create sessions
+	$("#calendar_container").on("click", "#session_edit", function(){
+		var sessionDiv = $(this).parent();
+		var parentID = $(this).parent().prop("id").replace("session-","");
+
+		getSessions(true);
+
+	});
 
 	/******************************************'
 	************ Calendar Section **************
 	=============================================*/
-	// This function will retrieve current and future game events from the server based on the current time
-	function getSessions(){
-		
-		alert("Got sessions before returning: "+sessionList.toString());
-		return sessionList;
-	}
-
 	function displayCalendar(month){
 		var calendar = "";		// this will hold the html needed to display the calendar view
 		switch(month){

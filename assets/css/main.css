@@ -32,6 +32,13 @@ body{
 	margin: 10px;
 }
 
+/****** Game Session Styling ********/
+.session_info{
+	margin: 7px;
+	padding: 5px;
+	background-color: #E4E4E4;
+}
+
 
 /****** Player Stats Styling ********/
 #stats_container{

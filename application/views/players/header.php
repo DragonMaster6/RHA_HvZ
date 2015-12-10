@@ -25,11 +25,12 @@
 		<!-- Add create session button here -->
 		<?php
 			if($this->player_model->isGM($_SESSION['pID'])){
-				echo "<button id='create_session_btn'> Create Session </button>";
+				echo "<button id='sessions_btn'> Create Session </button>";
 			}
 		?>
 		<button id="rulebook_btn">Rule Book</button>
 		<button id="contact_btn">Contact GM</button>
+		<button id="calendar_btn">Calendar</button>
 		<button id="profile_btn">Profile</button>
 		<button id="logout_btn" onClick="window.location ='<?php echo site_url('players/logout'); ?>'"> Logout </button>
 	</div>

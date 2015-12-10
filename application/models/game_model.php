@@ -19,6 +19,12 @@ class game_model extends CI_Model{
 
 
 // READ methods
+	public function getGames(){
+		// returns a list of all the game types and their rules
+		$query = $this->db->query("select * from game");
+
+		return $query->result_array();
+	}
 
 
 // UPDATE methods
