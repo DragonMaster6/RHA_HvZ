@@ -21,7 +21,21 @@ class GameSessions extends CI_Controller{
 ******** CREATE methods *******
 ===============================
 */
+	public function create(){
+		// the GM wants to create a new session
+		// extract the data from the post
+		date_default_timezone_set("America/Denver");
+		$session['title'] = $this->input->post('title');
+		$session['type'] = $this->input->post('type');
+		$session['start'] = date("Y-m-d H:i:s", $this->input->post('start'));
+		$session['finish'] = date("Y-m-d H:i:s", $this->input->post('finish'));
 
+		// insert into the database now
+		$success = $this->gamesession_model->createSession($session);
+
+
+		echo json_encode($success);
+	}
 
 /*=============================
 ******** READ methods *******
@@ -37,11 +51,30 @@ class GameSessions extends CI_Controller{
 		echo json_encode($data);
 	}
 
+	public function show($sID){
+		$data['session'] = $this->gamesession_model->getSession($sID);
+		$data['games'] = $this->game_model->getGames();
+
+		echo json_encode($data);
+	}
+
 /*=============================
 ******** UPDATE methods *******
 ===============================
 */
+	public function edit($sID){
+		date_default_timezone_set("America/Denver");
+		$session['sID'] = $sID;
+		$session['title'] = $this->input->post('title');
+		$session['type'] = $this->input->post('type');
+		$session['start'] = date("Y-m-d H:i:s", $this->input->post('start'));
+		$session['finish'] = date("Y-m-d H:i:s", $this->input->post('finish'));
 
+		// find and update that session entry
+		$success = $this->gamesession_model->updateSession($session);
+
+		echo json_encode($success);
+	}
 
 /*=============================
 ******** DELETE methods *******

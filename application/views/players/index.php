@@ -35,7 +35,7 @@
 		$starve = 172800 - ($current - $lastK);
 		echo "<div id='zombie_tool_container'>";
 				if($starve > 0){
-					echo "<input type='text' id='killNum'><button id='kill_btn'>Kill</button>";
+					echo "<input type='text' id='killNum' value='Enter badge here' onFocus='$(this).prop(\"value\",\"\");'><button id='kill_btn'>Kill</button>";
 				}
 				echo "<div id='countdown' style='float:right'>".$starve."</div>	
 			</div>";

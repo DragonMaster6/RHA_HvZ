@@ -205,7 +205,7 @@ $(document).ready(function(){
 				 	htmlOut += "<div class = joinedSession_list>" + sessionsJoined[index]['title'] + " " + sessionsJoined[index]['dateStart'] + " to " + sessionsJoined[index]['dateFinish'] + "<button class = 'leave_btn' value= "+ sessionsJoined[index]['sID']+"> Leave </button> </div>";
 				 });
 				 $.each(sessions, function(index){
-				 	htmlOut += "<div class = session_list>" + sessions[index]['title'] + " " + sessions[index]['dateStart'] + " to " + sessions[index]['dateFinish'] + "<button class = 'join_btn' value= "+ sessions[index]['sID']+"> Join </button> </div>";
+				 	htmlOut += "<div class = session_list>" + sessions[index]['title'] + " " + sessions[index]['dateStart'] + " to " + sessions[index]['dateFinish'] + "<br>Population thus far: "+sessions[index]['numPlay']+"<button class = 'join_btn' value= "+ sessions[index]['sID']+"> Join </button> </div>";
 				 });
 				 $("#data_container").html(htmlOut);
 			});
@@ -379,7 +379,7 @@ $(document).ready(function(){
 	function getSessions(edit){
 		// edit parameter determines if the display needs to show text fields
 
-		var htmlOut = "<h3> Planned Zombie Outbreaks </h3><button id='session_create_btn'> Create a new outbreak </button><br>";
+		var htmlOut = "<h3> Planned Zombie Outbreaks </h3><button onClick='$(\"#create_session\").slideToggle(\"slow\");'> Create a new outbreak </button><br>";
 
 		// send a request to get all sessions in progress and in the future
 		$.ajax({
@@ -390,46 +390,30 @@ $(document).ready(function(){
 		.done(function(msg){
 			var sessions = msg.sessions;
 			var games = msg.games;
+			var gameType;		// holds the html for game types
+			gameType = "<select id='new_gameType'>";
+			$.each(games, function(index){
+				var type = games[index];
+				gameType += "<option value='"+type['gID']+"'> "+type['title']+"</option>";
+			});
+			gameType += "</select>";
+
+			htmlOut += "<div class='hide' id='create_session'>"+
+							"Outbreak Title: <input type='text' id='new_title'><br>"+
+							"Game type:"+gameType+"<br>"+
+							"Starting date: <input type='text' id='new_start'><br>"+
+							"Finishing date: <input type='text' id='new_finish'><br>"+
+							"<button id='session_create_btn'>Begin Infection</button><br>"+
+						"</div>";
 
 			$.each(sessions, function(index){
 				var session = sessions[index];
 				var game; // holds the game details specified by the session
-				var gameType = "<select id='gameType'>"; // holds the html code to display the game
-
-				// find the game type
-				$.each(games, function(gIndex){
-					var type = games[gIndex];
-					if(type['gID'] == session['gType'] && !edit){
-						game = type;
-					}else{
-						gameType += "<option value='"+type['gID']+"'>"+type['title']+"</option>";
-					}
-				});
-				gameType += "</select>";
-
-				// these variables will aid in displaying the proper features
-				var title = session['title'];
-				var start = session['dateStart'];
-				var fin = session['dateFinish'];
-
-				// check for edit mode
-				if(edit){
-					title = "<input type='text' name='title' value='"+title+"'>";
-					start = "<input type='text' name='start' value='"+start+"'>";
-					fin = "<input type='text' name='finish' value='"+fin+"'>";
-				}else{
-					gameType = game['title'];
-				}
-
-				htmlOut += "<div id='session-"+session['sID']+"' class='session_info'>"+
-								"Session Title: "+title+"<br>"+
-								"Game Type: "+gameType+"<br>"+
-								start+" to "+fin+"<br>"+
-								"Number of Players: "+session['numPlay']+"<br>"+
-								"Top Zombie: "+session['topZ']+"<br>"+
-								"Top Human(s): "+session['topH']+"<br>"+
-								"<button id='session_edit'>Edit</button><br>"+
-							"</div>";
+				
+				htmlOut += "<div id='session-"+session['sID']+"' class='session_info'>";
+				htmlOut += displaySession(session, games, edit);
+				htmlOut += "</div>";
+					
 			});
 
 			// display the results now
@@ -437,13 +421,126 @@ $(document).ready(function(){
 		});
 	}
 
-	// actions taken to modify/create sessions
+	function displaySession(session, games, edit){
+		// This function displays an individual session either in edit mode or not display mode
+		var htmlOut = "";
+
+		var gameType = "<select class='gameType'>"; // holds the html code to display the game
+
+		// find the game type
+		$.each(games, function(gIndex){
+			var type = games[gIndex];
+			if(type['gID'] == session['gType'] && !edit){
+				game = type;
+			}else{
+				if(type['gID'] == session['gType']){
+					gameType += "<option value='"+type['gID']+"' selected>"+type['title']+"</option>";	
+				}else{
+					gameType += "<option value='"+type['gID']+"'>"+type['title']+"</option>";
+				}
+			}
+		});
+		gameType += "</select>";
+
+		// these variables will aid in displaying the proper features
+		var title = session['title'];
+		var start = session['dateStart'];
+		var fin = session['dateFinish'];
+		var buttons = "<button id='session_edit'>Edit</button><button id='session_delete_btn'>Delete</button><br>"
+
+		// check for edit mode
+		if(edit){
+			title = "<input type='text' name='title' class='title' value='"+title+"'>";
+			start = "<input type='text' name='start' class='start' value='"+start+"'>";
+			fin = "<input type='text' name='finish' class='finish' value='"+fin+"'>";
+			buttons = "<button id='session_sEdit_btn'>Submit</button><button id='session_cancel_btn'>Cancel</button><br>"
+		}else{
+			gameType = game['title'];
+		}
+
+		htmlOut += 		"Session Title: "+title+"<br>"+
+						"Game Type: "+gameType+"<br>"+
+						start+" to "+fin+"<br>"+
+						"Number of Players: "+session['numPlay']+"<br>"+
+						"Top Zombie: "+session['topZ']+"<br>"+
+						"Top Human(s): "+session['topH']+"<br>"+
+						buttons;
+
+		return htmlOut;
+	}
+
+	/**** actions taken to modify/create sessions ****/
 	$("#calendar_container").on("click", "#session_edit", function(){
 		var sessionDiv = $(this).parent();
 		var parentID = $(this).parent().prop("id").replace("session-","");
 
-		getSessions(true);
+		// retrieve the session and then display with edits
+		$.ajax({
+			type: "post",
+			url: SITE_DOMAIN+"/gamesessions/show/"+parentID,
+			dataType: "json"
+		})
+		.done(function(msg){
+			$(sessionDiv).html(displaySession(msg.session, msg.games, true));
+		});
 
+	});
+	$("#calendar_container").on("click", "#session_cancel_btn", function(){
+		// cancel button
+		getSessions();
+	});
+	$("#calendar_container").on("click", "#session_sEdit_btn", function(){
+		// submit changes button
+		var parentID = "#"+$(this).parent().prop("id");
+		var id = $(this).parent().prop("id").replace("session-","");
+		// extract the data needed to pass to ajax
+		var title = $(parentID+" .title").val();
+		var gameType = $(parentID+" .gameType").val();
+		var start = $(parentID+" .start").val();
+		var fin = $(parentID+" .finish").val();
+
+		// Be sure to do some data validation here
+		// convert times into unix timestamps
+		start = new Date(start);
+			start = Date.parse(start)/1000;
+		fin = new Date(fin);
+			fin = Date.parse(fin)/1000;
+
+		$.ajax({
+			type: "post",
+			url: SITE_DOMAIN+"/gamesession/edit/"+id,
+			dataType: "json",
+			data: {title: title, type: gameType, start: start, finish: fin}
+		})
+		.done(function(msg){
+			getSessions(false);
+		});
+
+	});
+	$("#calendar_container").on("click", "#session_create_btn", function(){
+		// The GM wants to create a new infection outbreak. Gather the data now
+		var title = $("#new_title").val();
+		var gameType = $("#new_gameType").val();
+		var start = $("#new_start").val();
+		var fin = $("#new_finish").val();
+
+		// Be sure to do some data validation here
+		// convert times into unix timestamps
+		start = new Date(start);
+			start = Date.parse(start)/1000;
+		fin = new Date(fin);
+			fin = Date.parse(fin)/1000;
+
+		// Send the data up to the server
+		$.ajax({
+			type: "post",
+			url: SITE_DOMAIN+"/gamesession/create",
+			dataType: "json",
+			data: {title: title, type: gameType, start: start, finish: fin}
+		})
+		.done(function(msg){
+			getSessions(false);
+		});
 	});
 
 	/******************************************'

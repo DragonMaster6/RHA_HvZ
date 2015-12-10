@@ -25,7 +25,7 @@
 		<!-- Add create session button here -->
 		<?php
 			if($this->player_model->isGM($_SESSION['pID'])){
-				echo "<button id='sessions_btn'> Create Session </button>";
+				echo "<button id='sessions_btn'> Sessions </button>";
 			}
 		?>
 		<button id="rulebook_btn">Rule Book</button>

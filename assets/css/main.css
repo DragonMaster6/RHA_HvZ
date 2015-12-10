@@ -21,6 +21,9 @@ body{
 	width: 50%;
 	background-color: #12BC4A;
 }
+.hide{
+	display: none;
+}
 
 /****** Login Styling *******/
 #login_container{
@@ -37,6 +40,13 @@ body{
 	margin: 7px;
 	padding: 5px;
 	background-color: #E4E4E4;
+}
+#create_session{
+	margin: 7px;
+	padding: 5px;
+}
+.session_create_success{
+	background-color: lightgreen;
 }
 
 
@@ -142,4 +152,11 @@ body{
 	width: 95%;
 	padding: 10px;
 
+}
+
+#countdown{
+	font-size: 200%;
+	font-family: "Impact";
+	margin-right: 100px;
+	color: #C90303;
 }

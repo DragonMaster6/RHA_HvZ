@@ -51,7 +51,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 // GameSession routes
-$rout['gamesession/index'] = 'gamesessions/index';
+$route['gamesession/index'] = 'gamesessions/index';
+$route['gamesession/show/(:any)'] = 'gamesessions/show/$1';
+$route['gamesession/create'] = 'gamesessions/create';
+$route['gamesession/edit/(:any)'] = 'gamesessions/edit/$1';
+
 
 
 // Player stat specific 
