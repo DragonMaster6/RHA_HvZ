@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2015 at 01:14 AM
+-- Generation Time: Dec 11, 2015 at 05:49 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS `gamesession` (
 --
 
 INSERT INTO `gamesession` (`sID`, `title`, `gType`, `dateStart`, `dateFinish`, `topH`, `topZ`) VALUES
-(1, 'The Cold Virus Begins', 1, '2015-11-17 00:00:00', '2015-12-09 00:00:00', 0, 0),
-(2, 'Project Virus Cold', 1, '2015-12-14 00:00:00', '2015-12-21 00:00:00', 0, 0),
+(1, 'The Cold Virus Begins', 1, '2015-11-17 00:00:00', '2015-12-10 00:00:00', 0, 0),
+(2, 'Project Virus Cold', 1, '2015-12-09 00:00:00', '2015-12-21 00:00:00', 0, 0),
 (3, 'Project Warm Virus', 1, '2016-01-14 00:00:00', '2016-01-21 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
@@ -85,11 +85,44 @@ CREATE TABLE IF NOT EXISTS `gamestats` (
 --
 
 INSERT INTO `gamestats` (`sID`, `pID`, `badge`, `hScore`, `zScore`, `lastKill`, `originalZ`) VALUES
-(1, 1, 111112, NULL, 0, NULL, 0),
-(1, 2, 264982, '2015-11-23 14:00:00', 1, '2015-11-25 11:20:14', 0),
+(1, 1, 111112, '2015-12-09 14:51:44', 0, '2015-12-09 14:51:44', 0),
+(1, 2, 264982, '2015-11-23 14:00:00', 4, '2015-12-09 14:51:44', 0),
 (1, 4, 444444, NULL, 0, NULL, 0),
 (1, 6, 666666, NULL, 0, NULL, 1),
-(2, 2, 458578, NULL, 0, NULL, 0);
+(2, 2, 553049, '2015-12-10 21:08:00', 6, '2015-12-10 21:48:40', 1),
+(2, 3, 0, '2015-12-10 21:48:08', 0, '2015-12-10 21:48:08', 0),
+(2, 4, 532541, NULL, 0, NULL, 0),
+(2, 5, 614595, NULL, 0, NULL, 0),
+(2, 6, 802589, NULL, 0, NULL, 0),
+(2, 7, 338415, NULL, 0, NULL, 0),
+(2, 8, 428980, NULL, 0, NULL, 0),
+(2, 9, 0, '2015-12-10 21:47:31', 0, '2015-12-10 21:47:31', 0),
+(2, 10, 787387, NULL, 0, NULL, 0),
+(2, 11, 483768, NULL, 0, NULL, 0),
+(2, 12, 849311, NULL, 0, NULL, 0),
+(2, 13, 159057, NULL, 0, NULL, 0),
+(2, 14, 269426, NULL, 0, NULL, 0),
+(2, 15, 162513, NULL, 0, NULL, 0),
+(2, 16, 893910, NULL, 0, NULL, 0),
+(2, 17, 903597, NULL, 0, NULL, 0),
+(2, 18, 283653, NULL, 0, NULL, 0),
+(2, 19, 0, '2015-12-10 21:47:00', 0, '2015-12-10 21:47:00', 0),
+(2, 20, 884314, NULL, 0, NULL, 0),
+(2, 21, 900693, NULL, 0, NULL, 0),
+(2, 22, 0, '2015-12-10 21:47:43', 0, '2015-12-10 21:47:43', 0),
+(2, 23, 845227, NULL, 0, NULL, 0),
+(2, 24, 976220, NULL, 0, NULL, 0),
+(2, 25, 197141, NULL, 0, NULL, 0),
+(2, 26, 0, '2015-12-10 21:48:40', 0, '2015-12-10 21:48:40', 0),
+(2, 27, 780153, NULL, 0, NULL, 0),
+(2, 31, 306761, NULL, 0, NULL, 0),
+(2, 34, 326895, NULL, 0, NULL, 0),
+(2, 35, 188365, NULL, 0, NULL, 0),
+(2, 36, 219439, NULL, 0, NULL, 0),
+(2, 37, 633816, NULL, 0, NULL, 0),
+(2, 38, 0, '2015-12-10 21:48:32', 0, '2015-12-10 21:48:32', 0),
+(2, 40, 724707, NULL, 0, NULL, 0),
+(2, 51, 430737, NULL, 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -107,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `gender` char(1) NOT NULL,
   `gm` int(11) NOT NULL DEFAULT '0',
   `gameCount` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `players`
@@ -163,7 +196,8 @@ INSERT INTO `players` (`pID`, `fname`, `lname`, `dname`, `email`, `pass`, `gende
 (47, 'Viktor', 'Kranz', 'XenosHunter', '', 'kranz', 'M', 0, 0),
 (48, 'Hector', 'Gallus', 'DaemonHunter', '', 'gallus', 'M', 0, 0),
 (49, 'Hugh', 'Jackman', 'Wolverine', '', 'jackman', 'M', 0, 0),
-(50, 'Ororo', 'Munroe', 'Storm', '', 'munroe', 'F', 0, 0);
+(50, 'Ororo', 'Munroe', 'Storm', '', 'munroe', 'F', 0, 0),
+(51, 'Rory', 'Lewis', 'LewisBand', '', 'lewis', 'M', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -211,7 +245,7 @@ ALTER TABLE `gamesession`
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `pID` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=51;
+  MODIFY `pID` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
