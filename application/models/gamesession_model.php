@@ -69,4 +69,8 @@ class gamesession_model extends CI_Model{
 
 
 // DELETE methods
+	public function deleteSession($sID){
+		$query = $this->db->query("delete from gamesession where sID=".$sID);
+		return $query;
+	}
 }

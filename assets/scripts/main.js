@@ -223,6 +223,10 @@ $(document).ready(function(){
 				data: {sID: session, pID: pID}
 			})
 		.done(function(msg){
+			// be sure to update the hidden fields
+			if($("#session").val() == -1 && $("#session").val() != ""){
+				$("#session").prop("value", session);
+			}
 			getAlerts();
 			displayCalendar(timeStamp.getMonth()+1);
 		});
@@ -240,6 +244,8 @@ $(document).ready(function(){
 				data: {sID: session, pID: pID}
 			})
 		.done(function(msg){
+			// make sure that the hidden fields are correctly updated
+			$("#session").prop("value","-1");
 			getAlerts();
 			displayCalendar(timeStamp.getMonth()+1);
 		});
@@ -541,6 +547,27 @@ $(document).ready(function(){
 		.done(function(msg){
 			getSessions(false);
 		});
+	});
+	$("#calendar_container").on("click", "#session_delete_btn", function(){
+		// GM wants to delete all the contents from a session
+		var parentID = "#"+$(this).parent().prop("id");
+		var id = $(this).parent().prop("id").replace("session-", "");
+
+		// Be sure to confirm that they want to delete EVERYTHING relating to that session
+		var response = confirm("Deleting this will destroy all player data relating to this session.\n Continue to erase history TimeLord?");
+		if(response){
+			// They want to erase history. So be it
+			$.ajax({
+				type: "post",
+				url: SITE_DOMAIN+"/gamesession/delete",
+				dataType: "json",
+				data: {sID: id}
+			})
+			.done(function(msg){
+				getSessions(false);
+			});
+		}
+
 	});
 
 	/******************************************'

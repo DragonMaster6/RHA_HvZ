@@ -11,6 +11,7 @@ class GameSessions extends CI_Controller{
 		// load models here
 		$this->load->model("gamesession_model");
 		$this->load->model("game_model");
+		$this->load->model("gamestats_model");
 
 		// load helper classes
 		$this->load->helper("url_helper");
@@ -80,4 +81,14 @@ class GameSessions extends CI_Controller{
 ******** DELETE methods *******
 ===============================
 */
+	public function delete(){
+		$sID = $this->input->post('sID');
+		// First delete everything from the gamestats table
+		$data['gamestat_del'] = $this->gamestats_model->deletePlayerData($sID);
+
+		// Second delete the session itself
+		$data['session_del'] = $this->gamesession_model->deleteSession($sID);
+
+		echo json_encode($data);
+	}
 }

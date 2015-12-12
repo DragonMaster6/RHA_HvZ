@@ -182,7 +182,7 @@ class Players extends CI_Controller{
 		$sessions = $this->gamesession_model->getSessions();
 		$data["sessionsJoined"] = [];
 		$data["sessions"] = [];
-		$data["alerts"] = "";
+		$data["alerts"] = "";		// this is where we will introduce the notification system
 
 		foreach($sessions as $session){
 			$found = false;
