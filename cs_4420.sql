@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2015 at 05:49 AM
+-- Generation Time: Dec 12, 2015 at 11:54 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `gamesession` (
   `dateFinish` datetime DEFAULT NULL,
   `topH` int(11) NOT NULL,
   `topZ` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `gamesession`
@@ -62,7 +62,8 @@ CREATE TABLE IF NOT EXISTS `gamesession` (
 INSERT INTO `gamesession` (`sID`, `title`, `gType`, `dateStart`, `dateFinish`, `topH`, `topZ`) VALUES
 (1, 'The Cold Virus Begins', 1, '2015-11-17 00:00:00', '2015-12-10 00:00:00', 0, 0),
 (2, 'Project Virus Cold', 1, '2015-12-09 00:00:00', '2015-12-21 00:00:00', 0, 0),
-(3, 'Project Warm Virus', 1, '2016-01-14 00:00:00', '2016-01-21 00:00:00', 0, 0);
+(3, 'Project Warm Virus', 1, '2016-01-14 00:00:00', '2016-01-21 00:00:00', 0, 0),
+(4, 'Testing Outbreak', 1, '2015-12-22 00:00:00', '2015-12-30 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,7 @@ INSERT INTO `gamestats` (`sID`, `pID`, `badge`, `hScore`, `zScore`, `lastKill`, 
 (1, 2, 264982, '2015-11-23 14:00:00', 4, '2015-12-09 14:51:44', 0),
 (1, 4, 444444, NULL, 0, NULL, 0),
 (1, 6, 666666, NULL, 0, NULL, 1),
-(2, 2, 553049, '2015-12-10 21:08:00', 6, '2015-12-10 21:48:40', 1),
+(2, 2, 553049, '2015-12-10 21:08:00', 7, '2015-12-12 15:42:02', 1),
 (2, 3, 0, '2015-12-10 21:48:08', 0, '2015-12-10 21:48:08', 0),
 (2, 4, 532541, NULL, 0, NULL, 0),
 (2, 5, 614595, NULL, 0, NULL, 0),
@@ -122,7 +123,7 @@ INSERT INTO `gamestats` (`sID`, `pID`, `badge`, `hScore`, `zScore`, `lastKill`, 
 (2, 37, 633816, NULL, 0, NULL, 0),
 (2, 38, 0, '2015-12-10 21:48:32', 0, '2015-12-10 21:48:32', 0),
 (2, 40, 724707, NULL, 0, NULL, 0),
-(2, 51, 430737, NULL, 0, NULL, 0);
+(2, 53, 0, '2015-12-12 15:42:02', 0, '2015-12-12 15:42:02', 0);
 
 -- --------------------------------------------------------
 
@@ -140,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `players` (
   `gender` char(1) NOT NULL,
   `gm` int(11) NOT NULL DEFAULT '0',
   `gameCount` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `players`
@@ -197,7 +198,8 @@ INSERT INTO `players` (`pID`, `fname`, `lname`, `dname`, `email`, `pass`, `gende
 (48, 'Hector', 'Gallus', 'DaemonHunter', '', 'gallus', 'M', 0, 0),
 (49, 'Hugh', 'Jackman', 'Wolverine', '', 'jackman', 'M', 0, 0),
 (50, 'Ororo', 'Munroe', 'Storm', '', 'munroe', 'F', 0, 0),
-(51, 'Rory', 'Lewis', 'LewisBand', '', 'lewis', 'M', 0, 0);
+(52, 'Rory', 'Lewis', 'LewisGM', '', 'rory', 'M', 1, 0),
+(53, 'Zombie', 'Rory', 'LewisZombie', '', 'infect', 'M', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -240,12 +242,12 @@ ALTER TABLE `game`
 -- AUTO_INCREMENT for table `gamesession`
 --
 ALTER TABLE `gamesession`
-  MODIFY `sID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `sID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `players`
 --
 ALTER TABLE `players`
-  MODIFY `pID` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=52;
+  MODIFY `pID` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
