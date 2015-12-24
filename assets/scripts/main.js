@@ -8,6 +8,7 @@ $(document).ready(function(){
 	var SITE_DOMAIN = "http://localhost/index.php/";
 	var BASE_DOMAIN = "http://localhost/";
 	var timeStamp = new Date();
+	var leapYear = (timeStamp.getYear()%4 == 0 && timeStamp.getYear()%100 != 0) || (timeStamp.getYear()%400 == 0);
 	var timer;
 	var remaining;
 
@@ -58,7 +59,7 @@ $(document).ready(function(){
 
 		// display the calendar now
 		$("#calendar_header").html(months[timeStamp.getMonth()]);
-		displayCalendar(timeStamp.getMonth()+1);
+		displayCalendar(timeStamp.getMonth()+1, leapYear);
 	});
 
 	$("#profile_btn").on("click", function(){
@@ -76,7 +77,7 @@ $(document).ready(function(){
 		// Setup the calendar view
 		// Retrieve the current time and date
 		var months = ["January","Feburary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		displayCalendar(timeStamp.getMonth()+1);
+		displayCalendar(timeStamp.getMonth()+1, leapYear);
 		$("#calendar_header").html(months[timeStamp.getMonth()]);
 		getStats();
 		$("#stats_btn").on("click", function(){
@@ -228,7 +229,7 @@ $(document).ready(function(){
 				$("#session").prop("value", session);
 			}
 			getAlerts();
-			displayCalendar(timeStamp.getMonth()+1);
+			displayCalendar(timeStamp.getMonth()+1, leapYear);
 		});
 	});
 
@@ -247,7 +248,7 @@ $(document).ready(function(){
 			// make sure that the hidden fields are correctly updated
 			$("#session").prop("value","-1");
 			getAlerts();
-			displayCalendar(timeStamp.getMonth()+1);
+			displayCalendar(timeStamp.getMonth()+1, leapYear);
 		});
 	});
 
@@ -573,7 +574,7 @@ $(document).ready(function(){
 	/******************************************'
 	************ Calendar Section **************
 	=============================================*/
-	function displayCalendar(month){
+	function displayCalendar(month,leap){
 		var calendar = "";		// this will hold the html needed to display the calendar view
 		switch(month){
 			case 1:
@@ -587,6 +588,12 @@ $(document).ready(function(){
 				break;
 
 			case 2:
+				if(leap){
+					calendar = display(29);
+				}else{
+					calendar = displayDay(28);
+				}
+				break;
 			case 4:
 			case 6:
 			case 9:
@@ -617,7 +624,26 @@ $(document).ready(function(){
 			.done(function(msg){
 				var sessions = msg.sessions;
 				var sessionsJoined = msg.sessionsJoined;
-				for(var i = 1; i < type+1; i++){
+				var dayOfWeek = 0;
+
+				// create the days of the week labels
+				calendar += "<div class='weekday'>Sunday</div>"+
+							"<div class='weekday'>Monday</div>"+
+							"<div class='weekday'>Tuesday</div>"+
+							"<div class='weekday'>Wednesday</div>"+
+							"<div class='weekday'>Thursday</div>"+
+							"<div class='weekday'>Friday</div>"+
+							"<div class='weekday'>Saturday</div>"+"<br>";
+
+				// Add blank div containers to align to the proper day of week
+				var monthDay = new Date(timeStamp.getFullYear()+"-"+(timeStamp.getMonth()+1)+"-1");
+				for(var i = 0; i < monthDay.getDay(); i++){
+					calendar += "<div class='day'></div>";
+					dayOfWeek++;
+				}
+
+
+				for(var i = 1; i < type+1; i++){	// Type is the number of days in a month 
 					var dayStyle = "day";		// based on the on-going sessions and to be held sessions
 					var start, finish;
 					$.each(sessions, function(index){
@@ -662,9 +688,8 @@ $(document).ready(function(){
 						}
 					});
 
-					
 
-
+					// Add a box for that day
 					calendar += "<div id='day-"+i+"' class='"+dayStyle+"'>"+i;
 
 					// has the day already pasted 
@@ -673,7 +698,9 @@ $(document).ready(function(){
 					}
 
 					calendar += "</div>";
-					if(i%7 == 0){
+
+					// End of the week so add a newline to the calendar
+					if(dayOfWeek == 6){
 						calendar += "<br>";
 					}
 				}

@@ -102,7 +102,7 @@ body{
 	border: 2px solid black;
 	float: left;
 	width: 65%;
-	height: 627px;
+	height: 700px;
 	overflow: auto;
 	opacity: 0.9;
 	font-weight: bold;
@@ -111,6 +111,16 @@ body{
 	font-size: 250%;
 	text-align: center;
 	padding: 5px;
+}
+
+.weekday{
+	border: 1px solid black;
+	width: calc(100%/7.5);
+	height: auto;
+	float: left;
+	margin: 1px;
+	text-align: center;
+	font-weight: bold;
 }
 
 .day{
