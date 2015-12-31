@@ -12,6 +12,12 @@ body{
 }
 
 
+#main_container{
+	position: relative;
+	float:left;
+	left: calc(100%/2 - 578.5px);
+}
+
 /******* Common containers *****/
 #error_container{
 	width: 50%;
@@ -23,6 +29,9 @@ body{
 }
 .hide{
 	display: none;
+}
+.clear{
+	clear: both;
 }
 
 /****** Login Styling *******/
@@ -58,7 +67,7 @@ body{
 	background-repeat: no-repeat;
 */
 	background-color: black;
-	width: 30%;
+	width: 400px;
 	height: auto;
 	float: left;
 	margin: 5px;
@@ -100,8 +109,9 @@ body{
 #calendar_container{
 	background-color: #AAAAAA;
 	border: 2px solid black;
+	padding: 10px;
 	float: left;
-	width: 65%;
+	width: 752px;
 	height: 700px;
 	overflow: auto;
 	opacity: 0.9;
@@ -113,58 +123,47 @@ body{
 	padding: 5px;
 }
 
+.active:hover{
+	background-color: gray;
+}
+
 .weekday{
 	border: 1px solid black;
-	width: calc(100%/7.5);
-	height: auto;
+	width: 100;
 	float: left;
 	margin: 1px;
 	text-align: center;
 	font-weight: bold;
 }
 
-.day{
+.calbox{
 	border: 1px solid black;
-	width: calc(100%/7.5);
-	height: 110;
+	width: 100px;
+	height: 100px;
 	float: left;
 	margin: 1px;
-	
 }
 
 .gameDay{
-	border: 1px solid black;
-	width: calc(100%/7.5);
-	height: 110;
-	float: left;
-	margin: 1px;
 	background-color: green;
-	
 }
 
 .waitDay{
-	border: 1px solid black;
-	width: calc(100%/7.5);
-	height: 110;
-	float: left;
-	margin: 1px;
 	background-color: yellow;
 	
 }
 
 .done_day{
-	float: right;
-	width: 90px;
-	height: 90px;
+	background-image: url("../pics/blackX.png");
+	background-size: 100px 100px;
+	font-weight: normal;
+	background-color: #666666;
 }
 
 
 /******** Zombie Tool Styling ********/
 #zombie_tool_container{
 	background-color: #AAAAAA;
-	position: absolute;
-	bottom: 0;
-	width: 95%;
 	padding: 10px;
 
 }
@@ -172,6 +171,6 @@ body{
 #countdown{
 	font-size: 200%;
 	font-family: "Impact";
-	margin-right: 100px;
+	margin-right: 10px;
 	color: #C90303;
 }

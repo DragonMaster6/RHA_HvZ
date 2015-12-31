@@ -589,7 +589,7 @@ $(document).ready(function(){
 
 			case 2:
 				if(leap){
-					calendar = display(29);
+					calendar = displayDay(29);
 				}else{
 					calendar = displayDay(28);
 				}
@@ -633,12 +633,12 @@ $(document).ready(function(){
 							"<div class='weekday'>Wednesday</div>"+
 							"<div class='weekday'>Thursday</div>"+
 							"<div class='weekday'>Friday</div>"+
-							"<div class='weekday'>Saturday</div>"+"<br>";
+							"<div class='weekday'>Saturday</div>"+"<br><div class='clear'></div>";
 
 				// Add blank div containers to align to the proper day of week
 				var monthDay = new Date(timeStamp.getFullYear()+"-"+(timeStamp.getMonth()+1)+"-1");
-				for(var i = 0; i < monthDay.getDay(); i++){
-					calendar += "<div class='day'></div>";
+				while(dayOfWeek != monthDay.getDay()){
+					calendar += "<div class='calbox' style='background-color:gray'></div>";
 					dayOfWeek++;
 				}
 
@@ -689,19 +689,25 @@ $(document).ready(function(){
 					});
 
 
-					// Add a box for that day
-					calendar += "<div id='day-"+i+"' class='"+dayStyle+"'>"+i;
-
 					// has the day already pasted 
 					if(i < day){
-						calendar += "<img class='done_day' src='"+BASE_DOMAIN+"/assets/pics/blackX.png'>";
+						// Add a box for that day
+						calendar += "<div id='day-"+i+"' class='calbox done_day'>"+i;
+						//calendar += "<img class='calbox done_day' src='"+BASE_DOMAIN+"/assets/pics/blackX.png'>";
+					}else{
+						// Add a box for that day
+						calendar += "<div id='day-"+i+"' class='calbox "+dayStyle+" active'>"+i;
 					}
 
 					calendar += "</div>";
 
+					// increase to the next day
+					dayOfWeek++;
+
 					// End of the week so add a newline to the calendar
-					if(dayOfWeek == 6){
-						calendar += "<br>";
+					if(dayOfWeek > 6){
+						calendar += "<div class='clear'></div>";
+						dayOfWeek = 0;
 					}
 				}
 
@@ -710,4 +716,11 @@ $(document).ready(function(){
 				$("#calendar").html(calendar);
 			});
 	}
+
+
+	/// Calendar Controls
+	$("#calendar").on("click", ".active", function(){
+		var day = $(this).prop("id").replace("day-","");
+		alert("Day "+day+" has been clicked");
+	});
 });
