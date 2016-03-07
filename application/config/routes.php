@@ -58,7 +58,6 @@ $route['gamesession/edit/(:any)'] = 'gameSessions/edit/$1';
 $route['gamesession/delete'] = 'gameSessions/delete';
 
 
-
 // Player stat specific 
 $route['players/survivors'] = 'players/listSurvivors';
 $route['players/stats'] = 'players/playerStats';
@@ -73,7 +72,6 @@ $route['players/update'] = 'players/update';
 $route['players/profile/(:any)'] = 'players/show/$1';
 $route['players/delete'] = 'players/delete';
 $route['players/main'] = 'players/index';
-
 
 // Mobile routes
 $route['mobile/login'] = 'mobile/login';
