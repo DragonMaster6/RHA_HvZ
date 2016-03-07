@@ -1,0 +1,176 @@
+/*
+ * Programmers: Ben Matson and Ben Lexa
+ * Date Created: November 12, 2015
+ * Purpose: Holds the general style for the main website
+*/
+body{
+	background-color: #666666; /*#009A0D;*/
+	background-image: url("../pics/background.jpg"); 
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+
+#main_container{
+	position: relative;
+	float:left;
+	left: calc(100%/2 - 578.5px);
+}
+
+/******* Common containers *****/
+#error_container{
+	width: 50%;
+	background-color: #C10000;
+}
+#success_container{
+	width: 50%;
+	background-color: #12BC4A;
+}
+.hide{
+	display: none;
+}
+.clear{
+	clear: both;
+}
+
+/****** Login Styling *******/
+#login_container{
+	background-color: #AAAAAA;
+	width: 50%;
+}
+#signup_container{
+	display: none;
+	margin: 10px;
+}
+
+/****** Game Session Styling ********/
+.session_info{
+	margin: 7px;
+	padding: 5px;
+	background-color: #E4E4E4;
+}
+#create_session{
+	margin: 7px;
+	padding: 5px;
+}
+.session_create_success{
+	background-color: lightgreen;
+}
+
+
+/****** Player Stats Styling ********/
+#stats_container{
+	/*background-color: #AAAAAA;*/
+/*	background-image: url("../pics/biohazard_back.jpg");
+	background-size: contain;
+	background-repeat: no-repeat;
+*/
+	background-color: black;
+	width: 400px;
+	height: auto;
+	float: left;
+	margin: 5px;
+	margin-right: 10px;
+	opacity: 0.9;
+}
+
+#data_container{
+	background-color: #AAAAAA;
+	opacity: 0.9;
+	font-weight: bold;
+	margin: 10px;
+	height: 500px;
+	overflow: auto;
+}
+
+.zombie_list {
+	color: green;
+}
+
+.departed_list {
+	color: red;
+	text-decoration: line-through;
+}
+
+.joinedSession_list {
+	opacity: 0.8;
+	background-color: green;
+	margin-bottom: 4px;
+}
+
+.session_list {
+	background-color: yellow;
+	opacity: 0.8;
+	margin-bottom: 4px;
+}
+
+/****** Calendar Styling  *******/
+#calendar_container{
+	background-color: #AAAAAA;
+	border: 2px solid black;
+	padding: 10px;
+	float: left;
+	width: 752px;
+	height: 700px;
+	overflow: auto;
+	opacity: 0.9;
+	font-weight: bold;
+}
+#calendar_header{
+	font-size: 250%;
+	text-align: center;
+	padding: 5px;
+}
+
+.active:hover{
+	background-color: gray;
+}
+
+.weekday{
+	border: 1px solid black;
+	width: 100;
+	float: left;
+	margin: 1px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.calbox{
+	border: 1px solid black;
+	width: 100px;
+	height: 100px;
+	float: left;
+	margin: 1px;
+}
+
+.gameDay{
+	background-color: green;
+}
+
+.waitDay{
+	background-color: yellow;
+	
+}
+
+.done_day{
+	background-image: url("../pics/blackX.png");
+	background-size: 100px 100px;
+	font-weight: normal;
+	background-color: #666666;
+}
+
+
+/******** Zombie Tool Styling ********/
+#zombie_tool_container{
+	background-color: #AAAAAA;
+	padding: 10px;
+
+}
+
+#countdown{
+	font-size: 200%;
+	font-family: "Impact";
+	margin-right: 10px;
+	color: #C90303;
+}
