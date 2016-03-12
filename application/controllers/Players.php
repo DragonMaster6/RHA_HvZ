@@ -25,13 +25,14 @@ class Players extends CI_Controller{
 	// sign up method to create a new player account
 	public function signup(){
 		// retrieve all the values
+		$player['email'] = $this->input->post('email');
 		$player['fname'] = $this->input->post('fname');
 		$player['lname'] = $this->input->post('lname');
 		$player['dname'] = $this->input->post('dname');
 		$player['pass'] = $this->input->post('pass');
 		$player['gender'] = $this->input->post('gender');
 
-		$data['message'] = $this->player_model->createPlayer($player);
+		$data = $this->player_model->createPlayer($player);
 
 		echo json_encode($data);
 	}
@@ -88,12 +89,10 @@ class Players extends CI_Controller{
 
 	// Main login screen for users not currently authenticated
 	public function start(){
-		$data["error"] = $this->session->userdata('error');
-		unset($_SESSION['error']);
 
 		// Render views here
 		$this->load->view("players/login_header");
-		$this->load->view("players/login", $data);
+		$this->load->view("players/login");
 		$this->load->view("players/footer");
 	}
 
@@ -103,17 +102,15 @@ class Players extends CI_Controller{
 		$password = $this->input->post("password"); 
 		$isAuth = $this->player_model->usrAuth($username, $password);
 
-		//render appropriate views based on user authentication
-		if($isAuth != -1)
-		{
+		// Check to see if the credentials passed
+		if($isAuth != -1){
+			// set the session variable
 			$_SESSION["pID"] = $isAuth;
-			redirect('players/index');
 		}
-		else
-		{
-			$_SESSION["error"] = "Invalid Username or Password";
-			redirect("players/start");
-		}
+
+		// Pass the data back to JSON
+		$data["isAuth"] = $isAuth;
+		echo json_encode($data);
 
 
 	}

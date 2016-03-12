@@ -10,49 +10,66 @@ class player_model extends CI_Model{
 		$this->load->database();
 	}
 
-
-	// CREATE methods
+// ***************
+// CREATE methods
+// ***************
 	// A new user wants to sign up so add them to the database
 	public function createPlayer($values){
 		// Escape all the values for security purposes
+		$email = $this->db->escape($values['email']);
 		$fname = $this->db->escape($values['fname']);
 		$lname = $this->db->escape($values['lname']);
 		$dname = $this->db->escape($values['dname']);
 		$pass = $this->db->escape($values['pass']);
 		$gender = $this->db->escape($values['gender']);
-		$result = $dname." has successfully joined the survival legion. Login to continue";	// assume that there isn't another player with the same dname
+		$result["success"] = "";		// assume failure
 
 		// First check to make sure that there isn't another player with the same dname
-		$query = $this->db->query("select dname from players where dname=".$dname);		
+		$dquery = $this->db->query("select dname from players where BINARY dname=".$dname);	
+		// Same goes for email
+		$equery = $this->db->query("select email from players where BINARY email=".$email);
+		$isDisplayName = $dquery->result_array();
+		$isEmail = $equery->result_array();
 
-		if(empty($query->result_array()[0])){
+		if(empty($isDisplayName) && empty($isEmail)){
 			// Submit the query
-			$query = $this->db->query("insert into players (fname,lname,dname,pass,gender
+			$result["success"] = $dname." has successfully joined the survival legion. Login to continue";
+			$query = $this->db->query("insert into players (fname,lname,dname,email,pass,gender
 										) values (
 										".$fname.",
 										".$lname.",
 										".$dname.",
+										".$email.",
 										".$pass.",
 										".$gender.");");
+			
 		}else{
-			$result = "There is already an account with: ".$dname; 
+			if(!empty($isDisplayName))
+				$result["user_err"] = "Username already in use";
+			if(!empty($isEmail))
+				$result["email_err"] = "Email already in use";
 		}
 
 
 		return $result;
 	}
 
-
-	//READ methods
+// *************
+// READ methods
+// *************
+	// Checks inputted credentials against database
 	public function usrAuth ($user, $pass)
 	{
-		$result = -1;
+		$result = -1;	// Default to failed login
 		$user = $this->db->escape($user);
 		$pass = $this->db->escape($pass);
-		$query = $this->db->query("select pID from players where dname =".$user. "and pass =".$pass);
+		// user BINARY to search in case sensitive
+		$query = $this->db->query("select pID from players where BINARY dname =".$user. "and BINARY pass =".$pass);
 		$auth_result = $query->result_array();
+
 		if (!empty($auth_result))
 		{
+			// The credentials match - return the player ID
 			$result = $auth_result[0]["pID"];
 		}
 		return $result;
@@ -81,7 +98,9 @@ class player_model extends CI_Model{
 		return $query->result_array()[0]["gm"];
 	}
 
-	// UPATE methods
+// ***************
+// UPATE methods
+// ***************
 	public function updateProfile($profile){
 		$query = $this->db->query("update players set 
 										fname=".$this->db->escape($profile['fname']).",
@@ -95,8 +114,9 @@ class player_model extends CI_Model{
 		return $query;
 	}
 
-
-	// DELETE methods
+// *****************
+// DELETE methods
+// *****************
 
 	public function deleteProfile($pID){
 		$query = $this->db->query("delete from players where pID=".$pID);

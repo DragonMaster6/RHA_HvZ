@@ -12,7 +12,9 @@ $(document).ready(function(){
 	var timer;
 	var remaining;
 
-
+// ***************
+// Login Methods
+// ***************
 	// If the user presses the recruit button
 	$("#recruit_btn").on("click", function(){
 		// retrieve all the fields
@@ -24,6 +26,7 @@ $(document).ready(function(){
 		});
 
 		var data = {
+			email: $("#email_in").val(),
 			fname: $("#fname_in").val(),
 			lname: $("#lname_in").val(),
 			dname: $("#dname_in").val(),
@@ -32,8 +35,21 @@ $(document).ready(function(){
 		};
 
 		// NOTE: Be sure to check for empty fields
+		if(!data.fname)
+			$("#fname_err").html("Enter your first name");
+		if(!data.lname)
+			$("#lname_err").html("Enter your last name");
+		if(!data.dname)
+			$("#dname_err").html("Enter a username");
+		if(!data.pass)
+			$("#password_err").html("Enter a password");
+		if(!data.email)		// NOTE: make sure to do a bit more processing here for a proper email
+			$("#email_err").html("Enter a valid email");
+
+
 		// determine if the passwords match
 		if(data.pass == $("#reenter").val()){
+			$("#reenter_err").html("");
 			// Pass the data onto the server now
 			$.ajax({
 				type: "post",
@@ -42,16 +58,80 @@ $(document).ready(function(){
 				data: data
 			})
 			.done(function(msg){
-				$("#success_container").html(msg.message);
+				// clear any error messages
+				$("#email_err").html("");
+				$("#dname_err").html("");
+				if(msg.success){
+					$("#success_container").html(msg.success);
+					$('#signup_container').slideToggle('slow');
+				}else{
+					if(msg.email_err)
+						$("#email_err").html(msg.email_err);
+					if(msg.user_err)
+						$("#dname_err").html(msg.user_err);
+				}
 			})
 			.fail(function(){
-				$("#error_container").html("Error: Something went wrong in the sign up process");
+				$("#error_container").html("Server Error: Couldn't add you into the database. Please try again later");
 			});
 		}else{
-			$("#error_container").html("Passwords do not match");
+			$("#reenter_err").html("Passwords do not match");
 		}
 	});
 
+	// When the user clicks the login button, send a login request
+	$("#login_btn").on("click", function(){
+		var response = "";		// This is used to communicate errors
+
+		// retrieve the username and password fields
+		var data = {
+			username: $("#username").val(),
+			password: $("#password").val()
+		};
+
+		// check for no white space
+		var user_check = data.username == " " || !data.username;
+		var pass_check = data.password == " " || !data.password;
+		// error handling
+		if(user_check){
+			//response = "Please enter a valid username <br>";
+			$("#user_err").html("Enter a username");
+		}else{
+			$("#user_err").html("");
+		}
+
+		if(pass_check){
+			//response = "Please enter in a password <br>";
+			$("#pass_err").html("Enter a password");
+		}else{
+			$("#pass_err").html("");
+		}
+
+		if(!user_check && !pass_check){
+			// Now send a login request
+			$.ajax({
+				type: "post",
+				url: SITE_DOMAIN+"players/login",
+				dataType: "json",
+				data: data
+			})
+			.done(function(msg){
+				// check to see if the server authenicated the users
+				if(msg.isAuth != -1){
+					// redirect the website to the player's index
+					window.location.assign(SITE_DOMAIN+"players/main");
+				}else{
+					// there was an error
+					$("#error_container").html("Incorrect Username or Password");
+				}
+			});
+		}
+	});
+
+
+// **************************
+// Player Dashboard Controls
+//****************************
 	// Dashboard controls
 	$("#calendar_btn").on("click", function(){
 		// Setup the calendar container the way it should be
