@@ -15,8 +15,10 @@ $(document).ready(function(){
 // ***************
 // Login Methods
 // ***************
-	// If the user presses the recruit button
+	// If the user presses the recruit button do information validation
 	$("#recruit_btn").on("click", function(){
+		$("#reenter_err").html("");		// NOTE: Might want to create a method to clear all error fields
+		var emailTest;		// holds the result if the user email is valid
 		// retrieve all the fields
 		var gender;
 		$(".gender_in").each(function(){
@@ -43,13 +45,25 @@ $(document).ready(function(){
 			$("#dname_err").html("Enter a username");
 		if(!data.pass)
 			$("#password_err").html("Enter a password");
-		if(!data.email)		// NOTE: make sure to do a bit more processing here for a proper email
+		else{
+			if(data.pass != $("#reenter").val())
+				$("#reenter_err").html("Passwords do not match");
+		}
+		if(!data.email){
 			$("#email_err").html("Enter a valid email");
+		}else{
+			// check to make sure the email address is in valid form "example@hvz.com"
+			// This is taken from RFC 5322
+			var regex = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+			emailTest = regex.test(data.email);
+			if(!emailTest){
+				$("#email_err").html("Enter a valid email");
+			}
+		}
 
 
-		// determine if the passwords match
-		if(data.pass == $("#reenter").val()){
-			$("#reenter_err").html("");
+		// determine if the passwords match and that the email is valid before continuing
+		if(data.pass == $("#reenter").val() && emailTest){
 			// Pass the data onto the server now
 			$.ajax({
 				type: "post",
@@ -74,8 +88,6 @@ $(document).ready(function(){
 			.fail(function(){
 				$("#error_container").html("Server Error: Couldn't add you into the database. Please try again later");
 			});
-		}else{
-			$("#reenter_err").html("Passwords do not match");
 		}
 	});
 
